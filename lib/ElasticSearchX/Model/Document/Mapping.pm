@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Mapping;
 {
-  $ElasticSearchX::Model::Document::Mapping::VERSION = '0.0.1';
+  $ElasticSearchX::Model::Document::Mapping::VERSION = '0.0.2';
 }
 use strict;
 use warnings;
@@ -180,7 +180,7 @@ ElasticSearchX::Model::Document::Mapping
 
 =head1 VERSION
 
-version 0.0.1
+version 0.0.2
 
 =head1 AUTHOR
 

@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Set;
 {
-  $ElasticSearchX::Model::Document::Set::VERSION = '0.0.1';
+  $ElasticSearchX::Model::Document::Set::VERSION = '0.0.2';
 }
 use Moose;
 use MooseX::ChainedAccessors;
@@ -198,7 +198,7 @@ ElasticSearchX::Model::Document::Set
 
 =head1 VERSION
 
-version 0.0.1
+version 0.0.2
 
 =head1 SYNOPSIS
 

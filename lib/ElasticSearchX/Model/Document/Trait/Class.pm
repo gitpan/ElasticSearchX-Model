@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Class;
 {
-  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.0.1';
+  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.0.2';
 }
 use Moose::Role;
 use List::Util ();
@@ -121,7 +121,7 @@ ElasticSearchX::Model::Document::Trait::Class
 
 =head1 VERSION
 
-version 0.0.1
+version 0.0.2
 
 =head1 AUTHOR
 

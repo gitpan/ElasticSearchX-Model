@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model;
 {
-  $ElasticSearchX::Model::VERSION = '0.0.1';
+  $ElasticSearchX::Model::VERSION = '0.0.2';
 }
 
 # ABSTRACT: Extensible and flexible model for ElasticSearch based on Moose
@@ -72,7 +72,7 @@ ElasticSearchX::Model - Extensible and flexible model for ElasticSearch based on
 
 =head1 VERSION
 
-version 0.0.1
+version 0.0.2
 
 =head1 SYNOPSIS
 
@@ -210,7 +210,7 @@ B<< This will delete all the data in your indices. >>
 
  $model->deploy( delete => 1 );
 
-=head2 PERFORMANCE CONSIDERATIONS
+=head1 PERFORMANCE CONSIDERATIONS
 
 Creating objects is a quite expensive operation. If you are
 crawling through large amounts of data, you will gain a huge

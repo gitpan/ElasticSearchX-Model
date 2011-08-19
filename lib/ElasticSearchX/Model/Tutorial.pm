@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Tutorial;
 {
-  $ElasticSearchX::Model::Tutorial::VERSION = '0.0.1';
+  $ElasticSearchX::Model::Tutorial::VERSION = '0.0.2';
 }
 # ABSTRACT: Tutorial for ElasticSearchX::Model
 1;
@@ -24,7 +24,7 @@ ElasticSearchX::Model::Tutorial - Tutorial for ElasticSearchX::Model
 
 =head1 VERSION
 
-version 0.0.1
+version 0.0.2
 
 =head1 INTRODUCTION
 
@@ -51,7 +51,7 @@ this looks like:
  
  has id        => ( is => 'ro', id => [qw(user post_date)] );
  has user      => ( is => 'ro', isa => 'Str' );
- has post_date => ( is => 'ro', isa => 'DateTime' );
+ has post_date => ( is => 'ro', isa => 'DateTime', required => 1, default => sub { DateTime->now } );
  has message   => ( is => 'rw', isa => 'Str', index => 'analyzed' );
  
  package MyModel::User;
@@ -60,10 +60,6 @@ this looks like:
  
  has nickname => ( is => 'ro', isa => 'Str', id => 1 );
  has name     => ( is => 'ro', isa => 'Str' );
-
-By default, all attributes defined in L<ElasticSearchX::Model::Document> classes
-are required and a read-only accessor is set up. This is different from
-the default Moose behaviour, but saves a lot of typing.
 
 You might be wondering why there is an additional C<id> attribute and a
 C<nickname>. The C<id> attribute in the Tweet class is build dynamically
@@ -88,7 +84,10 @@ database. And each type belongs to an index, which corresponds to a database.
 Modeling indices and types with L<ElasticSearchX::Model> is pretty easy
 and the types have actually already been built: the meta objects of the
 document classes describe the types. They include all the necessary 
-information to build a type mapping.
+information to build a type mapping. You can even use L<MooseX::Types::Structured>
+to build deepy nested structures that will be translated to C<object>
+properties in ElasticSearch. L<DateTime> attributes become a C<Date> type
+and so on.
 
 Indices are defined in a model class:
 
@@ -102,9 +101,9 @@ This is all you need to define the index and its types. The namespace option
 of the index C<twitter> will load all classes in the C<MyModel> namespace
 and add them to the twitter index. Actually, you don't even have to define
 the namespace in this case, since the namespace defaults to the name of the
-model class. You can also load types explicitly bydefining a C<types> option:
+model class. You can also load types explicitly by defining a C<types> option:
 
- index twitter => ( types => [MyModel::Tweet->meta, MyModel::User->meta] );
+ index twitter => ( types => [qw(MyModel::Tweet MyModel::User)] );
 
 Make sure that the classes are loaded. See L<ElasticSearchX::Model::Index> for all
 the available options.
@@ -115,7 +114,7 @@ To deploy the indices and mappings to ElasticSearch, simply call
  $model->deploy;
 
 This will try to connect to an ElasticSearch instance on 127.0.0.1:9200.
-See L<ElasticSearchX::Model/CONSTRUCTOR> for more information.
+See L<ElasticSearchX::Model/es> for more information.
 
 =head1 INDEXING
 
@@ -133,12 +132,17 @@ Indexing describes the process of adding documents to types.
 
  $twitter->type('tweet')->count; # 1
 
-The first parameter contains the property/values pairs. The C<post_date>
-property is special because it is a L<DateTime> object. Obects are
+The first parameter contains the property/value pairs. The C<post_date>
+property is special because it is a L<DateTime> object. Objects are
 being deflated prior to insertion. This is handled by 
 L<MooseX::Attribute::Deflator> and is configured in 
 L<ElasticSearchX::Model::Document::Types>. You can easily add deflators
 for other objects.
+
+Since the C<post_date> property is required and has a C<default>, you
+don't even have to it to C<put>. ElasticSearchX::Model will automatically
+build values from required attributes. If there is no builder or default,
+it will throw an exception.
 
 The second parameter to L<ElasticSearchX::Model::Document::Set/put> tells
 ElasticSearch to refresh the index immediately. Otherwise it can
@@ -157,7 +161,7 @@ the properties that define the id:
  my $tweet_copy = $twitter->type('tweet')->get($tweet->id);
  # or
  my $tweet_copy = $twitter->type('tweet')->get({
-     user => 'mo',
+     user      => 'mo',
      post_date => $timestamp,
  });
 
@@ -224,10 +228,10 @@ Now deploy the new index and start reindexing your data to the new index:
      $tweet->index($new);
      $tweet->put;
  }
- 
- Afterwards, you simply remove the C<twitter_v2> index and set the C<alias_for>
- attribute on index C<twitter> to C<twitter_v2>. You have to call
- C<< $model->deploy >> again, which will automatically update the aliases.
+
+Afterwards, you simply remove the C<twitter_v2> index and set the C<alias_for>
+attribute on index C<twitter> to C<twitter_v2>. You have to call
+C<< $model->deploy >> again, which will automatically update the aliases.
 
 =head1 AUTHOR
 
