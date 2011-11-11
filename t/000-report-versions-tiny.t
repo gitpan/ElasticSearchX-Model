@@ -75,6 +75,7 @@ eval { $v .= pmver('MooseX::Types','any version') };
 eval { $v .= pmver('MooseX::Types::ElasticSearch','any version') };
 eval { $v .= pmver('MooseX::Types::Moose','any version') };
 eval { $v .= pmver('MooseX::Types::Structured','any version') };
+eval { $v .= pmver('MyModel::Twitter::User','any version') };
 eval { $v .= pmver('Scalar::Util','any version') };
 eval { $v .= pmver('Sub::Exporter','any version') };
 eval { $v .= pmver('Test::MockObject::Extends','any version') };

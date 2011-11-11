@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Class;
 {
-  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.0.2';
+  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.0.3';
 }
 use Moose::Role;
 use List::Util ();
@@ -58,7 +58,7 @@ sub get_id_attribute {
     my $self = shift;
     my ( $id, $more ) = grep { $_->id } $self->get_all_properties;
     croak "Cannot have more than one id field on a class" if ($more);
-    return $id;
+    return $id || $self->get_attribute('_id');
 }
 
 sub get_parent_attribute {
@@ -121,7 +121,7 @@ ElasticSearchX::Model::Document::Trait::Class
 
 =head1 VERSION
 
-version 0.0.2
+version 0.0.3
 
 =head1 AUTHOR
 

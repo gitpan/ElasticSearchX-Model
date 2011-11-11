@@ -4,7 +4,7 @@
       "Moritz Onken"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.112150",
+   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.112621",
    "license" : [
       "bsd"
    ],
@@ -66,63 +66,63 @@
    "provides" : {
       "ElasticSearchX::Model" : {
          "file" : "lib/ElasticSearchX/Model.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Bulk" : {
          "file" : "lib/ElasticSearchX/Model/Bulk.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Document" : {
          "file" : "lib/ElasticSearchX/Model/Document.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Document::Mapping" : {
          "file" : "lib/ElasticSearchX/Model/Document/Mapping.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Document::Role" : {
          "file" : "lib/ElasticSearchX/Model/Document/Role.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Document::Set" : {
          "file" : "lib/ElasticSearchX/Model/Document/Set.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Document::Trait::Attribute" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Attribute.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Document::Trait::Class" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Class.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Document::Types" : {
          "file" : "lib/ElasticSearchX/Model/Document/Types.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Index" : {
          "file" : "lib/ElasticSearchX/Model/Index.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Role" : {
          "file" : "lib/ElasticSearchX/Model/Role.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Scroll" : {
          "file" : "lib/ElasticSearchX/Model/Scroll.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Trait::Class" : {
          "file" : "lib/ElasticSearchX/Model/Trait/Class.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Tutorial" : {
          "file" : "lib/ElasticSearchX/Model/Tutorial.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       },
       "ElasticSearchX::Model::Util" : {
          "file" : "lib/ElasticSearchX/Model/Util.pm",
-         "version" : "v0.0.2"
+         "version" : "v0.0.3"
       }
    },
    "release_status" : "stable",
@@ -131,5 +131,5 @@
          "http://www.opensource.org/licenses/bsd-license.php"
       ]
    },
-   "version" : "v0.0.2"
+   "version" : "v0.0.3"
 }

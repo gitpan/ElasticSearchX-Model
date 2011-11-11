@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Tutorial;
 {
-  $ElasticSearchX::Model::Tutorial::VERSION = '0.0.2';
+  $ElasticSearchX::Model::Tutorial::VERSION = '0.0.3';
 }
 # ABSTRACT: Tutorial for ElasticSearchX::Model
 1;
@@ -24,7 +24,7 @@ ElasticSearchX::Model::Tutorial - Tutorial for ElasticSearchX::Model
 
 =head1 VERSION
 
-version 0.0.2
+version 0.0.3
 
 =head1 INTRODUCTION
 
