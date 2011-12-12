@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Role;
 {
-  $ElasticSearchX::Model::Role::VERSION = '0.0.3';
+  $ElasticSearchX::Model::Role::VERSION = '0.0.4';
 }
 use Moose::Role;
 use ElasticSearch;
@@ -91,7 +91,7 @@ ElasticSearchX::Model::Role
 
 =head1 VERSION
 
-version 0.0.3
+version 0.0.4
 
 =head1 AUTHOR
 

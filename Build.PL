@@ -23,7 +23,7 @@ my %module_build_args = (
     "Moritz Onken"
   ],
   "dist_name" => "ElasticSearchX-Model",
-  "dist_version" => "0.0.3",
+  "dist_version" => "0.0.4",
   "license" => "bsd",
   "module_name" => "ElasticSearchX::Model",
   "recommends" => {},

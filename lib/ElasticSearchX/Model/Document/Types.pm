@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Types;
 {
-  $ElasticSearchX::Model::Document::Types::VERSION = '0.0.3';
+  $ElasticSearchX::Model::Document::Types::VERSION = '0.0.4';
 }
 use List::MoreUtils ();
 use DateTime::Format::Epoch::Unix;
@@ -88,7 +88,7 @@ Moose::Util::TypeConstraints::add_parameterizable_type(
     $REGISTRY->get_type_constraint(Type) );
 
 use MooseX::Attribute::Deflator;
-deflate 'Bool', via { \( $_ ? 1 : 0 ) };
+deflate 'Bool', via { $_ ? JSON::XS::true : JSON::XS::false };
 inflate 'Bool', via { $_ ? 1 : 0 };
 my @stat
     = qw(dev ino mode nlink uid gid rdev size atime mtime ctime blksize blocks);
@@ -122,7 +122,7 @@ ElasticSearchX::Model::Document::Types
 
 =head1 VERSION
 
-version 0.0.3
+version 0.0.4
 
 =head1 AUTHOR
 

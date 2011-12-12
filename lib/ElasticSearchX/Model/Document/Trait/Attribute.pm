@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Attribute;
 {
-  $ElasticSearchX::Model::Document::Trait::Attribute::VERSION = '0.0.3';
+  $ElasticSearchX::Model::Document::Trait::Attribute::VERSION = '0.0.4';
 }
 use Moose::Role;
 use ElasticSearchX::Model::Document::Mapping;
@@ -82,7 +82,7 @@ ElasticSearchX::Model::Document::Trait::Attribute
 
 =head1 VERSION
 
-version 0.0.3
+version 0.0.4
 
 =head1 ATTRIBUTES
 
