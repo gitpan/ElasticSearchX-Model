@@ -1,7 +1,7 @@
 #
 # This file is part of ElasticSearchX-Model
 #
-# This software is Copyright (c) 2011 by Moritz Onken.
+# This software is Copyright (c) 2012 by Moritz Onken.
 #
 # This is free software, licensed under:
 #
@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Scroll;
 {
-  $ElasticSearchX::Model::Scroll::VERSION = '0.0.4';
+  $ElasticSearchX::Model::Scroll::VERSION = '0.0.5';
 }
 use Moose;
 use ElasticSearch::ScrolledSearch;
@@ -35,6 +35,11 @@ has _scrolled_search => (
     }
 );
 
+has qs => (
+    is  => 'ro',
+    isa => 'HashRef',
+);
+
 sub _build__scrolled_search {
     my $self = shift;
     ElasticSearch::ScrolledSearch->new(
@@ -42,7 +47,8 @@ sub _build__scrolled_search {
         {   %{ $self->set->_build_query },
             scroll => $self->scroll,
             index  => $self->index->name,
-            type   => $self->type->short_name
+            type   => $self->type->short_name,
+            %{ $self->qs || {} },
         }
     );
 }
@@ -66,7 +72,7 @@ ElasticSearchX::Model::Scroll
 
 =head1 VERSION
 
-version 0.0.4
+version 0.0.5
 
 =head1 SYNOPSIS
 
@@ -115,7 +121,7 @@ Moritz Onken
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2011 by Moritz Onken.
+This software is Copyright (c) 2012 by Moritz Onken.
 
 This is free software, licensed under:
 

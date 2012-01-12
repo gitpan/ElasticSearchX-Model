@@ -1,7 +1,7 @@
 #
 # This file is part of ElasticSearchX-Model
 #
-# This software is Copyright (c) 2011 by Moritz Onken.
+# This software is Copyright (c) 2012 by Moritz Onken.
 #
 # This is free software, licensed under:
 #
@@ -9,8 +9,10 @@
 #
 package ElasticSearchX::Model::Document::Trait::Attribute;
 {
-  $ElasticSearchX::Model::Document::Trait::Attribute::VERSION = '0.0.4';
+  $ElasticSearchX::Model::Document::Trait::Attribute::VERSION = '0.0.5';
 }
+
+# ABSTRACT: Trait that extends the meta class of a document class
 use Moose::Role;
 use ElasticSearchX::Model::Document::Mapping;
 
@@ -65,7 +67,7 @@ after _process_options => sub {
         $options->{lazy}     = 1;
         $options->{required} = 1;
         $options->{default}  = sub {
-            confess "Attribute $name must be provided before calling reader";
+            confess "Attribute $name is required";
         };
     }
 };
@@ -78,20 +80,18 @@ after _process_options => sub {
 
 =head1 NAME
 
-ElasticSearchX::Model::Document::Trait::Attribute
+ElasticSearchX::Model::Document::Trait::Attribute - Trait that extends the meta class of a document class
 
 =head1 VERSION
 
-version 0.0.4
+version 0.0.5
 
 =head1 ATTRIBUTES
-
-B<< All attributes are C<required> and C<ro> by default. >>
 
 =head2 property
 
 This defaults to C<1> and marks the attribute as ElasticSearch
-property and thus will be added to mapping. If you set this
+property and thus will be added to the mapping. If you set this
 to C<0> the attribute will act as a traditional Moose attribute.
 
 =head2 id
@@ -122,9 +122,17 @@ Since the parent id is stored in the C<_parent> field, it
 is adviced to set L</source_only> to C<1> to prevent the
 field to be stored redundantly.
 
+=head2 source_only
+
+A C<source_only> attribute is not added to the type mapping,
+but it's value is included in the C<_source> of a document.
+This is helpful if you don't want to index the value of this
+attribute in ElasticSearch, but still want to be able to access
+its value.
+
 =head1 PASS THROUGH ATTRIBUTES
 
-The following attributes are passed thorugh - as is - to the
+The following attributes are passed through - as is - to the
 type mapping.
 
 =head2 store
@@ -179,7 +187,8 @@ the not analyzed version of this field along with the analyzed.
 
 =head2 build_property
 
-=head1 EXTENDING
+This method is called by L<ElasticSearchX::Model::Document::Trait::Class/mapping>
+and returns the mapping for this property as a HashRef.
 
 =head1 AUTHOR
 
@@ -187,7 +196,7 @@ Moritz Onken
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2011 by Moritz Onken.
+This software is Copyright (c) 2012 by Moritz Onken.
 
 This is free software, licensed under:
 

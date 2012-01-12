@@ -1,38 +1,11 @@
-package MyModel::Tweet;
-use Moose;
-use ElasticSearchX::Model::Document;
-
-has id        => ( is => 'ro', id  => [qw(user post_date)] );
-has user      => ( is => 'ro', isa => 'Str' );
-has post_date => ( is => 'ro', isa => 'DateTime' );
-has message   => ( is => 'rw', isa => 'Str', index => 'analyzed' );
-
-package MyModel::User;
-use Moose;
-use ElasticSearchX::Model::Document;
-
-has nickname => ( is => 'ro', isa => 'Str', id => 1 );
-has name => ( is => 'ro', isa => 'Str' );
-
-package MyModel;
-use Moose;
-use ElasticSearchX::Model;
-
-index twitter => ( namespace => 'MyModel' );
-
-package main;
+use strict;
+use warnings;
+use lib qw(t/lib);
+use MyModel;
 use Test::Most;
-use IO::Socket::INET;
-
-unless ( IO::Socket::INET->new('127.0.0.1:9900') ) {
-    plan skip_all => 'Requires an ElasticSearch server running on port 9900';
-}
-
-my $model = MyModel->new( es => ':9900' );
-ok( $model->deploy( delete => 1 ), 'Deploy ok' );
-
 use DateTime;
 
+my $model = MyModel->testing;
 my $twitter   = $model->index('twitter');
 my $timestamp = DateTime->now;
 ok( my $tweet = $twitter->type('tweet')->put(
@@ -45,6 +18,8 @@ ok( my $tweet = $twitter->type('tweet')->put(
     'Put ok'
 );
 
+ok( $tweet->_id, 'has id' );
+is( $tweet->_version, 1, 'has version 1' );
 my $tweets = $twitter->type('tweet');
 
 is( $tweets->count, 1, 'Count ok' );
@@ -63,6 +38,8 @@ ok( $tweet = $tweets->get(
     ),
     'Get tweet by key/values'
 );
+
+is( $tweet->_version, 1, 'version still 1 after get' );
 
 isa_ok( $tweet->post_date, 'DateTime' );
 my $raw = {
@@ -101,6 +78,7 @@ is( $twitter->type('tweet')->filter( { term => { user => 'mo' } } )
     my $i        = 0;
     while ( my $tweet = $iterator->next ) {
         $i++;
+        is( $tweet->_version, 1, '_version set on search as well' );
         isa_ok( $tweet, 'MyModel::Tweet' );
     }
     is( $i, 1, 'got one result' );

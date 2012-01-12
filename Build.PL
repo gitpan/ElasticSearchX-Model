@@ -23,7 +23,7 @@ my %module_build_args = (
     "Moritz Onken"
   ],
   "dist_name" => "ElasticSearchX-Model",
-  "dist_version" => "0.0.4",
+  "dist_version" => "0.0.5",
   "license" => "bsd",
   "module_name" => "ElasticSearchX::Model",
   "recommends" => {},
@@ -35,18 +35,13 @@ my %module_build_args = (
     "DateTime::Format::ISO8601" => 0,
     "Digest::SHA1" => 0,
     "ElasticSearch" => 0,
-    "ElasticSearch::ScrolledSearch" => 0,
     "JSON" => 0,
     "JSON::XS" => 0,
     "List::MoreUtils" => 0,
     "List::Util" => 0,
     "Module::Find" => 0,
     "Moose" => "2.02",
-    "Moose::Exporter" => 0,
-    "Moose::Role" => 0,
-    "Moose::Util::TypeConstraints" => 0,
     "MooseX::Attribute::Deflator" => "2.1.7",
-    "MooseX::Attribute::LazyInflator::Meta::Role::Attribute" => 0,
     "MooseX::ChainedAccessors" => 0,
     "MooseX::Types" => 0,
     "MooseX::Types::ElasticSearch" => 0,
@@ -54,9 +49,7 @@ my %module_build_args = (
     "MooseX::Types::Structured" => 0,
     "Scalar::Util" => 0,
     "Sub::Exporter" => 0,
-    "Try::Tiny" => 0,
-    "strict" => 0,
-    "warnings" => 0
+    "Try::Tiny" => 0
   },
   "script_files" => []
 );

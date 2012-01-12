@@ -29,6 +29,11 @@ t/document/class.t
 t/document/get_data.t
 t/document/mapping.t
 t/document/types.t
+t/es/delete.t
+t/es/version.t
+t/lib/MyModel.pm
+t/lib/MyModel/Tweet.pm
+t/lib/MyModel/User.pm
 t/model/minimal.t
 t/model/model.t
 t/release-has-version.t

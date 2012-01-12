@@ -54,7 +54,6 @@ eval { $v .= pmver('DateTime::Format::Epoch::Unix','any version') };
 eval { $v .= pmver('DateTime::Format::ISO8601','any version') };
 eval { $v .= pmver('Digest::SHA1','any version') };
 eval { $v .= pmver('ElasticSearch','any version') };
-eval { $v .= pmver('ElasticSearch::ScrolledSearch','any version') };
 eval { $v .= pmver('File::Find','any version') };
 eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('IO::Socket::INET','any version') };
@@ -65,25 +64,18 @@ eval { $v .= pmver('List::Util','any version') };
 eval { $v .= pmver('Module::Build','0.3601') };
 eval { $v .= pmver('Module::Find','any version') };
 eval { $v .= pmver('Moose','2.02') };
-eval { $v .= pmver('Moose::Exporter','any version') };
-eval { $v .= pmver('Moose::Role','any version') };
-eval { $v .= pmver('Moose::Util::TypeConstraints','any version') };
 eval { $v .= pmver('MooseX::Attribute::Deflator','2.1.7') };
-eval { $v .= pmver('MooseX::Attribute::LazyInflator::Meta::Role::Attribute','any version') };
 eval { $v .= pmver('MooseX::ChainedAccessors','any version') };
 eval { $v .= pmver('MooseX::Types','any version') };
 eval { $v .= pmver('MooseX::Types::ElasticSearch','any version') };
 eval { $v .= pmver('MooseX::Types::Moose','any version') };
 eval { $v .= pmver('MooseX::Types::Structured','any version') };
-eval { $v .= pmver('MyModel::Twitter::User','any version') };
 eval { $v .= pmver('Scalar::Util','any version') };
 eval { $v .= pmver('Sub::Exporter','any version') };
 eval { $v .= pmver('Test::MockObject::Extends','any version') };
 eval { $v .= pmver('Test::More','0.88') };
 eval { $v .= pmver('Test::Most','any version') };
 eval { $v .= pmver('Try::Tiny','any version') };
-eval { $v .= pmver('strict','any version') };
-eval { $v .= pmver('warnings','any version') };
 
 
 

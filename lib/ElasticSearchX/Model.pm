@@ -1,7 +1,7 @@
 #
 # This file is part of ElasticSearchX-Model
 #
-# This software is Copyright (c) 2011 by Moritz Onken.
+# This software is Copyright (c) 2012 by Moritz Onken.
 #
 # This is free software, licensed under:
 #
@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model;
 {
-  $ElasticSearchX::Model::VERSION = '0.0.4';
+  $ElasticSearchX::Model::VERSION = '0.0.5';
 }
 
 # ABSTRACT: Extensible and flexible model for ElasticSearch based on Moose
@@ -72,7 +72,7 @@ ElasticSearchX::Model - Extensible and flexible model for ElasticSearch based on
 
 =head1 VERSION
 
-version 0.0.4
+version 0.0.5
 
 =head1 SYNOPSIS
 
@@ -215,7 +215,7 @@ B<< This will delete all the data in your indices. >>
 Creating objects is a quite expensive operation. If you are
 crawling through large amounts of data, you will gain a huge
 speed improvement by not inflating the results to their
-document classes (see L<ElasticSearchX::Model::Set/raw>).
+document classes (see L<ElasticSearchX::Model::Document::Set/raw>).
 
 =head1 AUTHOR
 
@@ -223,7 +223,7 @@ Moritz Onken
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2011 by Moritz Onken.
+This software is Copyright (c) 2012 by Moritz Onken.
 
 This is free software, licensed under:
 
