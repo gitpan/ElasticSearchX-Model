@@ -22,49 +22,49 @@ name: ElasticSearchX-Model
 provides:
   ElasticSearchX::Model:
     file: lib/ElasticSearchX/Model.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Bulk:
     file: lib/ElasticSearchX/Model/Bulk.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Document:
     file: lib/ElasticSearchX/Model/Document.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Document::Mapping:
     file: lib/ElasticSearchX/Model/Document/Mapping.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Document::Role:
     file: lib/ElasticSearchX/Model/Document/Role.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Document::Set:
     file: lib/ElasticSearchX/Model/Document/Set.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Document::Trait::Attribute:
     file: lib/ElasticSearchX/Model/Document/Trait/Attribute.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Document::Trait::Class:
     file: lib/ElasticSearchX/Model/Document/Trait/Class.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Document::Types:
     file: lib/ElasticSearchX/Model/Document/Types.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Index:
     file: lib/ElasticSearchX/Model/Index.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Role:
     file: lib/ElasticSearchX/Model/Role.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Scroll:
     file: lib/ElasticSearchX/Model/Scroll.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Trait::Class:
     file: lib/ElasticSearchX/Model/Trait/Class.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Tutorial:
     file: lib/ElasticSearchX/Model/Tutorial.pm
-    version: v0.0.5
+    version: v0.1.0
   ElasticSearchX::Model::Util:
     file: lib/ElasticSearchX/Model/Util.pm
-    version: v0.0.5
+    version: v0.1.0
 requires:
   Carp: 0
   DateTime: 0
@@ -78,8 +78,8 @@ requires:
   List::Util: 0
   Module::Find: 0
   Moose: 2.02
+  MooseX::Attribute::Chained: 1.0.1
   MooseX::Attribute::Deflator: 2.1.7
-  MooseX::ChainedAccessors: 0
   MooseX::Types: 0
   MooseX::Types::ElasticSearch: 0
   MooseX::Types::Moose: 0
@@ -90,7 +90,7 @@ requires:
 resources:
   bugtracker: https://github.com/monken/p5-elasticsearch-model/issues
   repository: git://github.com/monken/p5-elasticsearch-model.git
-version: 0.0.5
+version: 0.1.0
 x_Dist_Zilla:
   plugins:
     -

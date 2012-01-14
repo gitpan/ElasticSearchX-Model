@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Index;
 {
-  $ElasticSearchX::Model::Index::VERSION = '0.0.5';
+  $ElasticSearchX::Model::Index::VERSION = '0.1.0';
 }
 use Moose;
 use Module::Find ();
@@ -135,7 +135,7 @@ ElasticSearchX::Model::Index
 
 =head1 VERSION
 
-version 0.0.5
+version 0.1.0
 
 =head1 ATTRIBUTES
 

@@ -23,7 +23,7 @@ my %module_build_args = (
     "Moritz Onken"
   ],
   "dist_name" => "ElasticSearchX-Model",
-  "dist_version" => "0.0.5",
+  "dist_version" => "0.1.0",
   "license" => "bsd",
   "module_name" => "ElasticSearchX::Model",
   "recommends" => {},
@@ -41,8 +41,8 @@ my %module_build_args = (
     "List::Util" => 0,
     "Module::Find" => 0,
     "Moose" => "2.02",
+    "MooseX::Attribute::Chained" => "1.0.1",
     "MooseX::Attribute::Deflator" => "2.1.7",
-    "MooseX::ChainedAccessors" => 0,
     "MooseX::Types" => 0,
     "MooseX::Types::ElasticSearch" => 0,
     "MooseX::Types::Moose" => 0,

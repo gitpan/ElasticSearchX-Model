@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Types;
 {
-  $ElasticSearchX::Model::Document::Types::VERSION = '0.0.5';
+  $ElasticSearchX::Model::Document::Types::VERSION = '0.1.0';
 }
 use List::MoreUtils ();
 use DateTime::Format::Epoch::Unix;
@@ -122,7 +122,7 @@ ElasticSearchX::Model::Document::Types
 
 =head1 VERSION
 
-version 0.0.5
+version 0.1.0
 
 =head1 AUTHOR
 

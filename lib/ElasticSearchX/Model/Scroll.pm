@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Scroll;
 {
-  $ElasticSearchX::Model::Scroll::VERSION = '0.0.5';
+  $ElasticSearchX::Model::Scroll::VERSION = '0.1.0';
 }
 use Moose;
 use ElasticSearch::ScrolledSearch;
@@ -72,7 +72,7 @@ ElasticSearchX::Model::Scroll
 
 =head1 VERSION
 
-version 0.0.5
+version 0.1.0
 
 =head1 SYNOPSIS
 
