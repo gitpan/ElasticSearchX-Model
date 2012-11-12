@@ -9,13 +9,14 @@
 #
 package ElasticSearchX::Model::Document::Types;
 {
-  $ElasticSearchX::Model::Document::Types::VERSION = '0.1.0';
+  $ElasticSearchX::Model::Document::Types::VERSION = '0.1.3';
 }
 use List::MoreUtils ();
 use DateTime::Format::Epoch::Unix;
 use DateTime::Format::ISO8601;
 use ElasticSearch;
-use MooseX::Attribute::Deflator 2.1.7;
+use MooseX::Attribute::Deflator;
+use MooseX::Attribute::Deflator::Moose;
 use DateTime;
 use JSON;
 use Scalar::Util qw(blessed);
@@ -25,23 +26,70 @@ use MooseX::Types -declare => [
     qw(
         Type
         Types
+        TimestampField
+        TTLField
         )
 ];
 
-use Sub::Exporter -setup => { exports => [qw(Location QueryType ES Type Types)] };
+use Sub::Exporter -setup => {
+    exports => [
+        qw(
+            Location
+            QueryType
+            ES
+            Type
+            Types
+            TimestampField
+            TTLField
+            )
+    ]
+};
 
-use MooseX::Types::Moose qw/Int Str ArrayRef HashRef/;
-use MooseX::Types::Structured qw(Dict Tuple Optional);
+use MooseX::Types::Moose qw/Int Str Bool ArrayRef HashRef/;
+use MooseX::Types::Structured qw(Dict Tuple Optional slurpy);
+
+subtype TimestampField, as Dict [
+    enabled => Bool,
+    path    => Optional [Str],
+    store   => Optional [Bool],
+    index   => Optional [Str],
+    slurpy HashRef,
+];
+coerce TimestampField, from Int, via {
+    { enabled => 1, store => 1 };
+};
+coerce TimestampField, from Str, via {
+    { enabled => 1, path => $_, store => 1 };
+};
+coerce TimestampField, from HashRef, via {
+    { enabled => 1, %$_ };
+};
+
+subtype TTLField, as Dict [
+    enabled => Bool,
+    default => Optional [Str],
+    store   => Optional [Bool],
+    index   => Optional [Str],
+    slurpy HashRef,
+];
+coerce TTLField, from Int, via {
+    { enabled => 1 };
+};
+coerce TTLField, from Str, via {
+    { enabled => 1, default => $_ };
+};
+coerce TTLField, from HashRef, via {
+    { enabled => 1, %$_ };
+};
 
 class_type 'DateTime';
-coerce 'DateTime', from Str, via {
-    if ( $_ =~ /^\d+$/ ) {
-        DateTime::Format::Epoch::Unix->parse_datetime($_);
-    }
-    else {
-        DateTime::Format::ISO8601->parse_datetime($_);
-    }
+coerce 'DateTime', from Int, via {
+    DateTime->from_epoch( epoch => $_ / 1000 );
 };
+coerce 'DateTime', from Str, via {
+    DateTime::Format::ISO8601->parse_datetime($_);
+};
+
 
 subtype Types, as HashRef ['Object'], where {
     !grep { $_->isa('Moose::Meta::Class') } keys %$_;
@@ -61,10 +109,9 @@ coerce Types, from ArrayRef ['Str'], via {
     my $array = $_;
     return {
         map {
-            my $meta = Class::MOP::Class->initialize( $_ );
+            my $meta = Class::MOP::Class->initialize($_);
             $meta->short_name => $meta
-            }
-            @$array
+            } @$array
     };
 };
 
@@ -88,27 +135,49 @@ Moose::Util::TypeConstraints::add_parameterizable_type(
     $REGISTRY->get_type_constraint(Type) );
 
 use MooseX::Attribute::Deflator;
-deflate 'Bool', via { $_ ? JSON::XS::true : JSON::XS::false };
-inflate 'Bool', via { $_ ? 1 : 0 };
 my @stat
     = qw(dev ino mode nlink uid gid rdev size atime mtime ctime blksize blocks);
-deflate 'File::stat', via { return { List::MoreUtils::mesh( @stat, @$_ ) } };
-deflate 'ScalarRef', via { ref $_         ? $$_ : $_ };
-deflate 'HashRef',   via { shift->dynamic ? $_  : encode_json($_) };
-inflate 'HashRef',   via { shift->dynamic ? $_  : decode_json($_) };
-deflate 'DateTime',  via { $_->iso8601 };
-inflate 'DateTime', via { DateTime::Format::ISO8601->parse_datetime($_) };
-deflate Location, via { [ $_->[0] + 0, $_->[1] + 0 ] };
-deflate Type . '[]', via { ref $_ eq 'HASH' ? $_ : $_->meta->get_data($_) };
-deflate 'ArrayRef[]', via {
-    my ( $attr, $constraint, $deflate ) = @_;
-    return $_ if ( $attr->dynamic );
-    $constraint = $constraint->parent
-        if ( ref $constraint eq 'MooseX::Types::TypeDecorator' );
-    my $value = [@$_];
-    $_ = $deflate->( $_, $constraint->type_parameter ) for (@$value);
-    return $deflate->( $value, $constraint->parent );
+deflate 'File::stat', via { return { List::MoreUtils::mesh( @stat, @$_ ) } },
+    inline_as {
+    join( "\n",
+        'my @stat = qw(dev ino mode nlink uid gid',
+        'rdev size atime mtime ctime blksize blocks);',
+        'List::MoreUtils::mesh( @stat, @$value )',
+    );
+    };
+deflate [ 'ArrayRef', 'HashRef' ],
+    via { shift->dynamic ? $_ : encode_json($_) }, inline_as {
+    return '$value' if ( $_[0]->dynamic );
+    return 'JSON::encode_json($value)';
+    };
+inflate [ 'ArrayRef', 'HashRef' ],
+    via { shift->dynamic ? $_ : decode_json($_) }, inline_as {
+    return '$value' if ( $_[0]->dynamic );
+    return 'JSON::decode_json($value)';
+    };
+
+deflate 'ArrayRef', via {$_}, inline_as {'$value'};
+inflate 'ArrayRef', via {$_}, inline_as {'$value'};
+
+deflate 'DateTime', via { $_->iso8601 }, inline_as {'$value->iso8601'};
+inflate 'DateTime', via {
+    $_ =~ /^\d+$/
+        ? DateTime->from_epoch( epoch => $_/1000 )
+        : DateTime::Format::ISO8601->parse_datetime($_);
+}, inline_as {
+    q(
+        $value =~ /^\d+$/
+            ? DateTime->from_epoch(epoch => $value/1000)
+            : DateTime::Format::ISO8601->parse_datetime($value)
+    )
 };
+deflate Location, via { [ $_->[0] + 0, $_->[1] + 0 ] },
+    inline_as {'[ $value->[0] + 0, $value->[1] + 0 ]'};
+deflate Type . '[]', via { ref $_ eq 'HASH' ? $_ : $_->meta->get_data($_) },
+    inline_as {
+    'ref $value eq "HASH" ? $value : $value->meta->get_data($value)';
+    };
+
 no MooseX::Attribute::Deflator;
 
 1;
@@ -122,7 +191,7 @@ ElasticSearchX::Model::Document::Types
 
 =head1 VERSION
 
-version 0.1.0
+version 0.1.3
 
 =head1 AUTHOR
 

@@ -9,11 +9,11 @@
 #
 package ElasticSearchX::Model::Document::Role;
 {
-  $ElasticSearchX::Model::Document::Role::VERSION = '0.1.0';
+  $ElasticSearchX::Model::Document::Role::VERSION = '0.1.3';
 }
 use Moose::Role;
 use ElasticSearchX::Model::Util ();
-use JSON::XS;
+use JSON;
 use Digest::SHA1;
 use List::MoreUtils ();
 use Carp;
@@ -23,16 +23,40 @@ sub _does_elasticsearchx_model_document_role {1}
 has _inflated_attributes =>
     ( is => 'rw', isa => 'HashRef', lazy => 1, default => sub { {} } );
 
+has _loaded_attributes => (
+    is => 'rw',
+    isa => 'HashRef',
+    clearer => '_clear_loaded_attributes',
+);
+
 has index => (
     isa => 'ElasticSearchX::Model::Index',
     is  => 'rw'
 );
 
-has _id      => ( is => 'ro' );
-has _version => ( is => 'ro' );
+has _id => (
+    is          => 'ro',
+    property    => 0,
+    source_only => 1,
+    traits      => [
+        'ElasticSearchX::Model::Document::Trait::Attribute',
+        'ElasticSearchX::Model::Document::Trait::Field::ID',
+    ],
+);
+has _version => (
+    is          => 'ro',
+    property    => 0,
+    source_only => 1,
+    traits      => [
+        'ElasticSearchX::Model::Document::Trait::Attribute',
+        'ElasticSearchX::Model::Document::Trait::Field::Version',
+    ],
+);
 
 sub update {
     my $self = shift;
+    die "cannot update partially loaded document"
+        unless($self->meta->all_properties_loaded($self));
     return $self->put( { $self->_update(@_) } );
 }
 
@@ -67,6 +91,7 @@ sub _create {
 sub put {
     my ( $self, $qs ) = @_;
     my $return = $self->index->model->es->index( $self->_put($qs) );
+    $self->_clear_loaded_attributes;
     my $id     = $self->meta->get_id_attribute;
     $id->set_value( $self, $return->{_id} ) if ($id);
     $self->meta->get_attribute('_id')->set_value( $self, $return->{_id} );
@@ -79,13 +104,15 @@ sub _put {
     my ( $self, $qs ) = @_;
     my $id     = $self->meta->get_id_attribute->get_value($self);
     my $parent = $self->meta->get_parent_attribute;
+    my $data   = $self->meta->get_data($self);
+    $qs = { %{ $self->meta->get_query_data($self) }, %{ $qs || {} } };
     return (
         index => $self->index->name,
         type  => $self->meta->short_name,
         $id ? ( id => $id ) : (),
-        data => $self->meta->get_data($self),
+        data => $data,
         $parent ? ( parent => $parent->get_value($self) ) : (),
-        %{ $qs || {} },
+        %$qs,
     );
 }
 
@@ -96,7 +123,7 @@ sub delete {
         index => $self->index->name,
         type  => $self->meta->short_name,
         id    => $self->_id,
-        %$qs
+        %{ $qs || {} },
     );
     return $self;
 }
@@ -122,7 +149,7 @@ ElasticSearchX::Model::Document::Role
 
 =head1 VERSION
 
-version 0.1.0
+version 0.1.3
 
 =head1 AUTHOR
 

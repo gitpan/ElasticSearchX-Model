@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Set;
 {
-  $ElasticSearchX::Model::Document::Set::VERSION = '0.1.0';
+  $ElasticSearchX::Model::Document::Set::VERSION = '0.1.3';
 }
 
 # ABSTRACT: Represents a query used for fetching a set of results
@@ -34,7 +34,8 @@ has filter => (
     traits => [qw(ChainedClone)]
 );
 
-has [qw(from size)] => ( isa => 'Int', is => 'rw', traits => [qw(ChainedClone)] );
+has [qw(from size)] =>
+    ( isa => 'Int', is => 'rw', traits => [qw(ChainedClone)] );
 
 has [qw(fields sort)] => (
     isa    => 'ArrayRef',
@@ -46,7 +47,8 @@ sub add_sort { push( @{ $_[0]->sort }, $_[1] ); return $_[0]; }
 
 sub add_field { push( @{ $_[0]->fields }, $_[1] ); return $_[0]; }
 
-has query_type => ( isa => QueryType, is => 'rw', traits => [qw(ChainedClone)] );
+has query_type =>
+    ( isa => QueryType, is => 'rw', traits => [qw(ChainedClone)] );
 
 has mixin => ( is => 'ro', isa => 'HashRef', traits => [qw(ChainedClone)] );
 
@@ -55,6 +57,23 @@ has inflate =>
 
 sub raw {
     shift->inflate(0);
+}
+
+has _refresh =>
+    ( isa => 'Bool', default => 0, is => 'rw', traits => [qw(ChainedClone)] );
+
+sub refresh {
+    shift->_refresh(1);
+}
+
+sub _build_qs {
+    my ( $self, $qs ) = @_;
+    $qs ||= {};
+
+    # we only want to set qs if they are not the default
+    $qs->{refresh} = 1 if ( $self->_refresh );
+    $qs->{query_type} = $self->query_type if ( $self->query_type );
+    return $qs;
 }
 
 sub _build_query {
@@ -79,13 +98,13 @@ sub _build_query {
 sub put {
     my ( $self, $args, $qs ) = @_;
     my $doc = $self->new_document($args);
-    $doc->put($qs);
+    $doc->put( $self->_build_qs($qs) );
     return $doc;
 }
 
 sub new_document {
     my ( $self, $args ) = @_;
-    return $self->type->new_object( %$args, index => $self->index );
+    return $self->type->name->new( %$args, index => $self->index );
 }
 
 sub inflate_result {
@@ -93,21 +112,16 @@ sub inflate_result {
     my ( $type, $index ) = ( $res->{_type}, $res->{_index} );
     $index = $index ? $self->model->index($index) : $self->index;
     $type  = $type  ? $index->get_type($type)     : $self->type;
-    my $id     = $type->get_id_attribute;
-    my $parent = $type->get_parent_attribute;
-    return $type->new_object(
-        {   %{ $res->{_source} || {} },
-            index    => $index,
-            _id      => $res->{_id},
-            _version => $res->{_version},
-            $id     ? ( $id->name     => $res->{_id} )     : (),
-            $parent ? ( $parent->name => $res->{_parent} ) : (),
-        }
-    );
+    my $doc = $type->inflate_result( $index, $res );
+    unless($res->{_source}) {
+        $doc->_loaded_attributes({ map { $_ => 1 } @{$self->fields} });
+    }
+    return $doc;
 }
 
 sub get {
     my ( $self, $args, $qs ) = @_;
+    $qs = $self->_build_qs($qs);
     my ($id);
     my ( $index, $type ) = ( $self->index->name, $self->type->short_name );
 
@@ -144,6 +158,7 @@ sub get {
 
 sub all {
     my ( $self, $qs ) = @_;
+    $qs = $self->_build_qs($qs);
     my ( $index, $type ) = ( $self->index->name, $self->type->short_name );
     my $res = $self->es->transport->request(
         {   method => 'POST',
@@ -159,6 +174,7 @@ sub all {
 
 sub first {
     my ( $self, $qs ) = @_;
+    $qs = $self->_build_qs($qs);
     my @data = $self->size(1)->all($qs);
     return undef unless (@data);
     return $data[0] if ( $self->inflate );
@@ -166,12 +182,14 @@ sub first {
 }
 
 sub count {
-    my $self = shift;
+    my ( $self, $qs ) = @_;
+    $qs = $self->_build_qs($qs);
     my ( $index, $type ) = ( $self->index->name, $self->type->short_name );
     my $res = $self->es->transport->request(
         {   method => 'POST',
             cmd    => "/$index/$type/_search",
             data   => { %{ $self->_build_query }, size => 0 },
+            qs     => $qs,
         }
     );
     return $res->{hits}->{total};
@@ -179,12 +197,13 @@ sub count {
 
 sub delete {
     my ( $self, $qs ) = @_;
+    $qs = $self->_build_qs($qs);
     my $query = $self->_build_query;
     return $self->es->delete_by_query(
         index => $self->index->name,
         type  => $self->type->short_name,
         query => $query->{filter} ? { filtered => $query } : $query->{query},
-        %{ $qs || {} },
+        %$qs,
     );
 }
 
@@ -193,7 +212,7 @@ sub scroll {
     return ElasticSearchX::Model::Scroll->new(
         set => $self,
         scroll => $scroll || '1m',
-        qs => { version => 1, %{ $qs || {} } },
+        qs => $self->_build_qs( { version => 1, %{ $qs || {} } } ),
     );
 }
 
@@ -209,7 +228,7 @@ ElasticSearchX::Model::Document::Set - Represents a query used for fetching a se
 
 =head1 VERSION
 
-version 0.1.0
+version 0.1.3
 
 =head1 SYNOPSIS
 
@@ -283,6 +302,8 @@ build a C<filtered> query, which performs far better.
 =head2 fields
 
 =head2 sort
+
+=head2 query_type
 
 These attributes are passed directly to the ElasticSearch search request.
 
@@ -395,6 +416,12 @@ object.
 
 Don't inflate returned results. This is a convenience
 method around L</inflate>.
+
+=head2 refresh
+
+This will add the C<refresh> query parameter to all requests.
+
+  $users->refresh->put( { nickname => 'mo' } );
 
 =head1 AUTHOR
 

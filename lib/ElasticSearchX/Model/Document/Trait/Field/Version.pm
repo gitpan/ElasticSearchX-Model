@@ -7,20 +7,19 @@
 #
 #   The (three-clause) BSD License
 #
-package ElasticSearchX::Model::Util;
+package ElasticSearchX::Model::Document::Trait::Field::Version;
 {
-  $ElasticSearchX::Model::Util::VERSION = '0.1.3';
+  $ElasticSearchX::Model::Document::Trait::Field::Version::VERSION = '0.1.3';
 }
-use strict;
-use warnings;
-use Digest::SHA1;
+use Moose::Role;
+use ElasticSearchX::Model::Document::Types qw(:all);
 
-sub digest {
-    my $digest = join( "\0", @_ );
-    $digest = Digest::SHA1::sha1_base64($digest);
-    $digest =~ tr/[+\/]/-_/;
-    return $digest;
+package ElasticSearchX::Model::Document::Trait::Class::Version;
+{
+  $ElasticSearchX::Model::Document::Trait::Class::Version::VERSION = '0.1.3';
 }
+use Moose::Role;
+
 
 1;
 __END__
@@ -28,7 +27,7 @@ __END__
 
 =head1 NAME
 
-ElasticSearchX::Model::Util
+ElasticSearchX::Model::Document::Trait::Field::Version
 
 =head1 VERSION
 

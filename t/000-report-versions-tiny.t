@@ -53,29 +53,25 @@ eval { $v .= pmver('DateTime','any version') };
 eval { $v .= pmver('DateTime::Format::Epoch::Unix','any version') };
 eval { $v .= pmver('DateTime::Format::ISO8601','any version') };
 eval { $v .= pmver('Digest::SHA1','any version') };
-eval { $v .= pmver('ElasticSearch','any version') };
+eval { $v .= pmver('ElasticSearch','0.61') };
 eval { $v .= pmver('File::Find','any version') };
 eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('IO::Socket::INET','any version') };
 eval { $v .= pmver('JSON','any version') };
-eval { $v .= pmver('JSON::XS','any version') };
 eval { $v .= pmver('List::MoreUtils','any version') };
 eval { $v .= pmver('List::Util','any version') };
 eval { $v .= pmver('Module::Build','0.3601') };
 eval { $v .= pmver('Module::Find','any version') };
 eval { $v .= pmver('Moose','2.02') };
-eval { $v .= pmver('MooseX::Attribute::Chained','1.0.1') };
-eval { $v .= pmver('MooseX::Attribute::Deflator','2.1.7') };
+eval { $v .= pmver('MooseX::Attribute::Chained','v1.0.1') };
+eval { $v .= pmver('MooseX::Attribute::Deflator','v2.2.0') };
 eval { $v .= pmver('MooseX::Types','any version') };
-eval { $v .= pmver('MooseX::Types::ElasticSearch','any version') };
-eval { $v .= pmver('MooseX::Types::Moose','any version') };
+eval { $v .= pmver('MooseX::Types::ElasticSearch','v0.0.2') };
 eval { $v .= pmver('MooseX::Types::Structured','any version') };
 eval { $v .= pmver('Scalar::Util','any version') };
 eval { $v .= pmver('Sub::Exporter','any version') };
 eval { $v .= pmver('Test::MockObject::Extends','any version') };
-eval { $v .= pmver('Test::More','0.88') };
 eval { $v .= pmver('Test::Most','any version') };
-eval { $v .= pmver('Try::Tiny','any version') };
 
 
 

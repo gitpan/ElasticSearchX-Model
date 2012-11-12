@@ -6,6 +6,7 @@ META.json
 META.yml
 README
 README.pod
+TODO
 dist.ini
 lib/ElasticSearchX/Model.pm
 lib/ElasticSearchX/Model/Bulk.pm
@@ -15,6 +16,10 @@ lib/ElasticSearchX/Model/Document/Role.pm
 lib/ElasticSearchX/Model/Document/Set.pm
 lib/ElasticSearchX/Model/Document/Trait/Attribute.pm
 lib/ElasticSearchX/Model/Document/Trait/Class.pm
+lib/ElasticSearchX/Model/Document/Trait/Field/ID.pm
+lib/ElasticSearchX/Model/Document/Trait/Field/TTL.pm
+lib/ElasticSearchX/Model/Document/Trait/Field/Timestamp.pm
+lib/ElasticSearchX/Model/Document/Trait/Field/Version.pm
 lib/ElasticSearchX/Model/Document/Types.pm
 lib/ElasticSearchX/Model/Index.pm
 lib/ElasticSearchX/Model/Role.pm
@@ -29,11 +34,15 @@ t/document/class.t
 t/document/get_data.t
 t/document/mapping.t
 t/document/types.t
+t/document/update.t
 t/es/delete.t
+t/es/fields.t
+t/es/timestamp.t
 t/es/version.t
 t/lib/MyModel.pm
 t/lib/MyModel/Tweet.pm
 t/lib/MyModel/User.pm
+t/model/es_version.t
 t/model/minimal.t
 t/model/model.t
 t/release-has-version.t

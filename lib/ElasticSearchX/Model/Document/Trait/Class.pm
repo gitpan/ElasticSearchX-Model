@@ -9,18 +9,48 @@
 #
 package ElasticSearchX::Model::Document::Trait::Class;
 {
-  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.1.0';
+  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.1.3';
 }
 
 # ABSTRACT: Trait that extends the meta class of a document class
 use Moose::Role;
-use List::Util ();
 use Carp;
+use List::Util ();
+use Module::Find ();
+use Eval::Closure;
 
 has set_class  => ( is => 'ro', builder => '_build_set_class',  lazy => 1 );
 has short_name => ( is => 'ro', builder => '_build_short_name', lazy => 1 );
 has _all_properties =>
     ( is => 'ro', lazy => 1, builder => '_build_all_properties' );
+
+has _field_alias => (
+    is      => 'ro',
+    traits  => ['Hash'],
+    isa     => 'HashRef[Str]',
+    default => sub { {} },
+    handles => { _add_field_alias => 'set' },
+);
+has _reverse_field_alias => (
+    is      => 'ro',
+    traits  => ['Hash'],
+    isa     => 'HashRef[Str]',
+    default => sub { {} },
+    handles => { _add_reverse_field_alias => 'set' },
+);
+has _id_attribute => ( is => 'ro', lazy_build => 1 );
+
+has _attribute_traits => ( is => 'ro', lazy_build => 1 );
+
+sub _build__attribute_traits {
+    return { map {
+            Class::Load::load_class($_);
+            my ($name) = ( $_ =~ /::(\w+)$/ );
+            lc($name) => $_
+        } Module::Find::findallmod(
+        'ElasticSearchX::Model::Document::Trait::Field')
+    }
+}
 
 sub _build_set_class {
     my $self = shift;
@@ -30,19 +60,15 @@ sub _build_set_class {
 }
 
 sub mapping {
-    my $self  = shift;
-    my $props = {
-        map { $_->name => $_->build_property }
-        sort { $a->name cmp $b->name }
-        grep { !$_->source_only }
-        grep { !$_->parent } $self->get_all_properties
-    };
+    my $self   = shift;
+    my $props  = { map { $_->mapping } $self->get_all_properties };
     my $parent = $self->get_parent_attribute;
     return {
         _source => { compress => \1 },
         $parent ? ( _parent => { type => $parent->name } ) : (),
         dynamic    => \0,
         properties => $props,
+        map { $_->type_mapping } $self->get_all_properties,
     };
 }
 
@@ -53,10 +79,13 @@ sub _build_short_name {
 }
 
 sub get_id_attribute {
+    return shift->_id_attribute;
+}
+
+sub _build__id_attribute {
     my $self = shift;
-    my ( $id, $more ) = grep { $_->id } $self->get_all_properties;
-    croak "Cannot have more than one id field on a class" if ($more);
-    return $id || $self->get_attribute('_id');
+    my (@id) = grep { $_->does('ElasticSearchX::Model::Document::Trait::Field::ID') } $self->get_all_properties;
+    return pop @id;
 }
 
 sub get_parent_attribute {
@@ -68,6 +97,39 @@ sub get_parent_attribute {
 
 sub get_version_attribute {
     shift->get_attribute('_version');
+}
+
+sub add_property {
+    my ($self, $name) = (shift, shift);
+    Moose->throw_error('Usage: has \'name\' => ( key => value, ... )')
+        if @_ % 2 == 1;
+    my %options = ( definition_context => Moose::Util::_caller_info(), @_ );
+    $options{traits} ||= [];
+    push(
+        @{ $options{traits} },
+        'ElasticSearchX::Model::Document::Trait::Attribute'
+    ) if ( $options{property} || !exists $options{property} );
+    delete $options{property};
+    my $attr_traits = $self->_attribute_traits;
+    for ( grep { $attr_traits->{$_} } keys %options ) {
+        push( @{ $options{traits} }, $attr_traits->{$_} );
+        #(my $class_trait = $attr_traits{$_}) =~ s/::Field::/::Class::/;
+        #Moose::Util::apply_all_roles($meta, $class_trait);
+    }
+    my $attrs = ( ref($name) eq 'ARRAY' ) ? $name : [ ($name) ];
+    $self->add_attribute( $_, %options ) for @$attrs;
+}
+
+sub all_properties_loaded {
+    my ($self, $instance) = @_;
+    my $loaded = $instance->_loaded_attributes;
+    return 1 unless($loaded);
+    my @properties = $self->get_all_properties;
+    for(@properties) {
+        return undef
+            unless($loaded->{$_->name} || $_->has_value($instance));
+    }
+    return 1;
 }
 
 sub get_all_properties {
@@ -88,11 +150,55 @@ sub get_data {
     my ( $self, $instance ) = @_;
     return {
         map {
-            my $deflate = $_->deflate($instance);
-            defined $deflate ? ( $_->name => $deflate ) : ();
+            my $deflate
+                = $_->is_inflated($instance)
+                || $_->is_required && !$_->has_value($instance)
+                ? $_->deflate($instance)
+                : $_->get_raw_value($instance);
+            defined $deflate ? ( $_->field_name => $deflate ) : ();
             } grep { $_->has_value($instance) || $_->is_required }
-            $self->get_all_properties
+            grep { $_->property } $self->get_all_properties
     };
+}
+
+sub get_query_data {
+    my ( $self, $instance ) = @_;
+    return {
+        map {
+            my $deflate
+                = $_->is_inflated($instance)
+                || $_->is_required && !$_->has_value($instance)
+                ? $_->deflate($instance)
+                : $_->get_raw_value($instance);
+            ( my $field = $_->field_name ) =~ s/^_//;
+            defined $deflate ? ( $field => $deflate ) : ();
+            } grep { $_->has_value($instance) || $_->is_required }
+            grep { $_->query_property } $self->get_all_properties
+    };
+}
+
+sub inflate_result {
+    my ( $self, $index, $res ) = @_;
+
+    #my $id     = $self->get_id_attribute;
+    my $parent = $self->get_parent_attribute;
+    my $fields = { %{ $res->{_source} || {} }, %{ $res->{fields} || {} } };
+    my $map    = $self->_reverse_field_alias;
+    map {
+        $fields->{ $map->{$_} }
+            = defined $res->{$_}
+            ? $res->{$_}
+            : $fields->{$_}
+        }
+        grep { defined $fields->{$_} || defined $res->{$_} } keys %$map;
+    return $self->name->new(
+        {   %$fields,
+            index    => $index,
+            _id      => $res->{_id},
+            _version => $res->{_version},
+            $parent ? ( $parent->name => $res->{_parent} ) : (),
+        }
+    );
 }
 
 1;
@@ -107,7 +213,7 @@ ElasticSearchX::Model::Document::Trait::Class - Trait that extends the meta clas
 
 =head1 VERSION
 
-version 0.1.0
+version 0.1.3
 
 =head1 ATTRIBUTES
 
@@ -137,6 +243,18 @@ last segment of the class name.
 Builds the type mapping for this document class. It loads all properties
 using L</get_all_properties> and calls
 L<ElasticSearchX::Model::Document::Trait::Attribute/build_property>.
+
+=head2 add_property
+
+  $meta->add_property( name => ( is => 'ro', isa => 'Str' ) )
+
+Add a property through the C<$meta> object.
+
+=head2 all_properties_loaded
+
+Returns true if all properties were acutally loaded from storage
+or whether C<ElasticSearchX::Model::Set/fields> was used to return
+a partial result set.
 
 =head2 get_id_attribute
 

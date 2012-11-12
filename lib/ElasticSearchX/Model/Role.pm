@@ -9,12 +9,12 @@
 #
 package ElasticSearchX::Model::Role;
 {
-  $ElasticSearchX::Model::Role::VERSION = '0.1.0';
+  $ElasticSearchX::Model::Role::VERSION = '0.1.3';
 }
 use Moose::Role;
 use ElasticSearch;
 use ElasticSearchX::Model::Index;
-use Try::Tiny;
+use version;
 use ElasticSearchX::Model::Document::Types qw(ES);
 
 has es => ( is => 'rw', lazy_build => 1, coerce => 1, isa => ES );
@@ -34,11 +34,13 @@ sub deploy {
         my $index = $self->index($name);
         next if ( $index->alias_for && $name eq $index->alias_for );
         $name = $index->alias_for if ( $index->alias_for );
-        try { $t->request( { method => 'DELETE', cmd => "/$name", } ); }
-        if ( $params{delete} );
+        local $@;
+        eval {
+            $t->request( { method => 'DELETE', cmd => "/$name" } )
+        } if ( $params{delete} );
         my $dep     = $index->deployment_statement;
         my $mapping = delete $dep->{mappings};
-        try {
+        eval {
             $t->request(
                 {   method => 'PUT',
                     cmd    => "/$name",
@@ -56,20 +58,17 @@ sub deploy {
             );
         }
         if ( my $alias = $index->alias_for ) {
-            my $aliases
-                = $self->es->get_aliases( index => $index->name )->{aliases}
-                ->{ $index->name };
+            my @aliases
+                = keys %{ $self->es->get_aliases( index => $index->name )
+                    || {} };
             my $actions = [
                 (   map {
-                        { remove => { index => $_, alias => $index->name }
-                        }
-                        } @$aliases
+                        { remove => { index => $_, alias => $index->name } }
+                        } @aliases
                 ),
                 { add => { index => $alias, alias => $index->name } }
             ];
-            $self->es->aliases(
-                actions => $actions
-            );
+            $self->es->aliases( actions => $actions );
         }
     }
     return 1;
@@ -78,6 +77,13 @@ sub deploy {
 sub bulk {
     my $self = shift;
     return ElasticSearchX::Model::Bulk->new( es => $self->es, @_ );
+}
+
+sub es_version {
+    my $self = shift;
+    my $string = $self->es->current_server_version->{number};
+    $string =~ s/RC//g;
+    return version->parse( $string )->numify;
 }
 
 1;
@@ -91,7 +97,7 @@ ElasticSearchX::Model::Role
 
 =head1 VERSION
 
-version 0.1.0
+version 0.1.3
 
 =head1 AUTHOR
 

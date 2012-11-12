@@ -8,12 +8,11 @@ build_requires:
   IO::Socket::INET: 0
   Module::Build: 0.3601
   Test::MockObject::Extends: 0
-  Test::More: 0.88
   Test::Most: 0
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640'
+generated_by: 'Dist::Zilla version 4.300016, CPAN::Meta::Converter version 2.120921'
 license: bsd
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -22,75 +21,93 @@ name: ElasticSearchX-Model
 provides:
   ElasticSearchX::Model:
     file: lib/ElasticSearchX/Model.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Bulk:
     file: lib/ElasticSearchX/Model/Bulk.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Document:
     file: lib/ElasticSearchX/Model/Document.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Document::Mapping:
     file: lib/ElasticSearchX/Model/Document/Mapping.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Document::Role:
     file: lib/ElasticSearchX/Model/Document/Role.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Document::Set:
     file: lib/ElasticSearchX/Model/Document/Set.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Document::Trait::Attribute:
     file: lib/ElasticSearchX/Model/Document/Trait/Attribute.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Document::Trait::Class:
     file: lib/ElasticSearchX/Model/Document/Trait/Class.pm
-    version: v0.1.0
+    version: v0.1.3
+  ElasticSearchX::Model::Document::Trait::Class::ID:
+    file: lib/ElasticSearchX/Model/Document/Trait/Field/ID.pm
+    version: v0.1.3
+  ElasticSearchX::Model::Document::Trait::Class::Timestamp:
+    file: lib/ElasticSearchX/Model/Document/Trait/Field/Timestamp.pm
+    version: v0.1.3
+  ElasticSearchX::Model::Document::Trait::Class::Version:
+    file: lib/ElasticSearchX/Model/Document/Trait/Field/Version.pm
+    version: v0.1.3
+  ElasticSearchX::Model::Document::Trait::Field::ID:
+    file: lib/ElasticSearchX/Model/Document/Trait/Field/ID.pm
+    version: v0.1.3
+  ElasticSearchX::Model::Document::Trait::Field::TTL:
+    file: lib/ElasticSearchX/Model/Document/Trait/Field/TTL.pm
+    version: v0.1.3
+  ElasticSearchX::Model::Document::Trait::Field::Timestamp:
+    file: lib/ElasticSearchX/Model/Document/Trait/Field/Timestamp.pm
+    version: v0.1.3
+  ElasticSearchX::Model::Document::Trait::Field::Version:
+    file: lib/ElasticSearchX/Model/Document/Trait/Field/Version.pm
+    version: v0.1.3
   ElasticSearchX::Model::Document::Types:
     file: lib/ElasticSearchX/Model/Document/Types.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Index:
     file: lib/ElasticSearchX/Model/Index.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Role:
     file: lib/ElasticSearchX/Model/Role.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Scroll:
     file: lib/ElasticSearchX/Model/Scroll.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Trait::Class:
     file: lib/ElasticSearchX/Model/Trait/Class.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Tutorial:
     file: lib/ElasticSearchX/Model/Tutorial.pm
-    version: v0.1.0
+    version: v0.1.3
   ElasticSearchX::Model::Util:
     file: lib/ElasticSearchX/Model/Util.pm
-    version: v0.1.0
+    version: v0.1.3
 requires:
   Carp: 0
   DateTime: 0
   DateTime::Format::Epoch::Unix: 0
   DateTime::Format::ISO8601: 0
   Digest::SHA1: 0
-  ElasticSearch: 0
+  ElasticSearch: 0.61
   JSON: 0
-  JSON::XS: 0
   List::MoreUtils: 0
   List::Util: 0
   Module::Find: 0
   Moose: 2.02
-  MooseX::Attribute::Chained: 1.0.1
-  MooseX::Attribute::Deflator: 2.1.7
+  MooseX::Attribute::Chained: v1.0.1
+  MooseX::Attribute::Deflator: v2.2.0
   MooseX::Types: 0
-  MooseX::Types::ElasticSearch: 0
-  MooseX::Types::Moose: 0
+  MooseX::Types::ElasticSearch: v0.0.2
   MooseX::Types::Structured: 0
   Scalar::Util: 0
   Sub::Exporter: 0
-  Try::Tiny: 0
 resources:
   bugtracker: https://github.com/monken/p5-elasticsearch-model/issues
   repository: git://github.com/monken/p5-elasticsearch-model.git
-version: 0.1.0
+version: 0.1.3
 x_Dist_Zilla:
   plugins:
     -
@@ -100,7 +117,7 @@ x_Dist_Zilla:
           phase: test
           type: requires
       name: TestRequires
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::Prereqs
       config:
@@ -108,11 +125,11 @@ x_Dist_Zilla:
           phase: runtime
           type: requires
       name: RuntimeRequires
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::GatherDir
       name: GatherDir
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::Test::Compile
       name: Test::Compile
@@ -132,11 +149,11 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::PodCoverageTests
       name: PodCoverageTests
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::PodSyntaxTests
       name: PodSyntaxTests
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::ReportVersions::Tiny
       name: ReportVersions::Tiny
@@ -144,27 +161,27 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::PruneCruft
       name: PruneCruft
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::PruneFiles
       name: PruneFiles
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::ManifestSkip
       name: ManifestSkip
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::ExtraTests
       name: ExtraTests
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::NextRelease
       name: NextRelease
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::PkgVersion
       name: PkgVersion
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::PodWeaver
       name: PodWeaver
@@ -176,11 +193,11 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::ExecDir
       name: ExecDir
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::ShareDir
       name: ShareDir
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::Bugtracker
       name: Bugtracker
@@ -192,35 +209,35 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::MetaProvides::Package
       name: MetaProvides::Package
-      version: 1.12060501
+      version: 1.14000001
     -
       class: Dist::Zilla::Plugin::MetaConfig
       name: MetaConfig
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::License
       name: License
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::ModuleBuild
       name: ModuleBuild
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::MetaYAML
       name: MetaYAML
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::MetaJSON
       name: MetaJSON
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::Readme
       name: Readme
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::Manifest
       name: Manifest
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::CheckChangeLog
       name: CheckChangeLog
@@ -228,29 +245,29 @@ x_Dist_Zilla:
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':InstallModules'
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':IncModules'
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':TestFiles'
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ExecFiles'
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':ShareFiles'
-      version: 4.300006
+      version: 4.300016
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':MainModule'
-      version: 4.300006
+      version: 4.300016
   zilla:
     class: Dist::Zilla::Dist::Builder
     config:
       is_trial: 0
-    version: 4.300006
+    version: 4.300016

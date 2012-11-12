@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model;
 {
-  $ElasticSearchX::Model::VERSION = '0.1.0';
+  $ElasticSearchX::Model::VERSION = '0.1.3';
 }
 
 # ABSTRACT: Extensible and flexible model for ElasticSearch based on Moose
@@ -72,7 +72,7 @@ ElasticSearchX::Model - Extensible and flexible model for ElasticSearch based on
 
 =head1 VERSION
 
-version 0.1.0
+version 0.1.3
 
 =head1 SYNOPSIS
 
@@ -209,6 +209,15 @@ To create the indices from scratch, pass C<< delete => 1 >>.
 B<< This will delete all the data in your indices. >>
 
  $model->deploy( delete => 1 );
+
+=head2 es_version
+
+ if($model->es_version > 0.02) { ... }
+
+Returns the L<version> number of the ElasticSearch server you are currently
+connected to. ElasticSearch uses Semantic Versioning. However, release candidates
+have a special syntax. For example, the version 0.20.0.RC1 would be parsed
+as 0.020_000_001.
 
 =head1 PERFORMANCE CONSIDERATIONS
 

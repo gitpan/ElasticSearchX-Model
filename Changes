@@ -1,3 +1,20 @@
+0.1.3 - 2012-11-11
+  - bump version of ElasticSearch.pm prereq
+  - tested with ES 0.20.0RC1
+  - added $model->es_version, returns a version object
+  - use JSON instead of JSON::XS as JSON will delegate to JSON::XS automatically if installed
+
+0.1.2 - 2012-08-24
+  - requires at least ES 0.19.2 which has a much more stable API
+  - supporting _timestamp and _ttl
+  - pluggable interface for loading special fields (ESX::Model::Document::Trait::Field)
+  - $document->update() will now fail if the document is only
+    partially loaded (i.e. using fields())
+
+0.1.1 - 2012-03-30
+  - $type->refresh sets the refresh qs to a true value
+  - query_type attribute
+
 0.1.0 - 2012-01-14
   - BREAKING CHANGE:
     attributes on the Set class will now clone the Set instance.

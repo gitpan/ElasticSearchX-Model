@@ -12,7 +12,6 @@ my %module_build_args = (
     "IO::Socket::INET" => 0,
     "Module::Build" => "0.3601",
     "Test::MockObject::Extends" => 0,
-    "Test::More" => "0.88",
     "Test::Most" => 0
   },
   "configure_requires" => {
@@ -23,7 +22,7 @@ my %module_build_args = (
     "Moritz Onken"
   ],
   "dist_name" => "ElasticSearchX-Model",
-  "dist_version" => "0.1.0",
+  "dist_version" => "0.1.3",
   "license" => "bsd",
   "module_name" => "ElasticSearchX::Model",
   "recommends" => {},
@@ -34,22 +33,19 @@ my %module_build_args = (
     "DateTime::Format::Epoch::Unix" => 0,
     "DateTime::Format::ISO8601" => 0,
     "Digest::SHA1" => 0,
-    "ElasticSearch" => 0,
+    "ElasticSearch" => "0.61",
     "JSON" => 0,
-    "JSON::XS" => 0,
     "List::MoreUtils" => 0,
     "List::Util" => 0,
     "Module::Find" => 0,
     "Moose" => "2.02",
-    "MooseX::Attribute::Chained" => "1.0.1",
-    "MooseX::Attribute::Deflator" => "2.1.7",
+    "MooseX::Attribute::Chained" => "v1.0.1",
+    "MooseX::Attribute::Deflator" => "v2.2.0",
     "MooseX::Types" => 0,
-    "MooseX::Types::ElasticSearch" => 0,
-    "MooseX::Types::Moose" => 0,
+    "MooseX::Types::ElasticSearch" => "v0.0.2",
     "MooseX::Types::Structured" => 0,
     "Scalar::Util" => 0,
-    "Sub::Exporter" => 0,
-    "Try::Tiny" => 0
+    "Sub::Exporter" => 0
   },
   "script_files" => []
 );

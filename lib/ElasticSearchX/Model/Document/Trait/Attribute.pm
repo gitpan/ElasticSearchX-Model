@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Attribute;
 {
-  $ElasticSearchX::Model::Document::Trait::Attribute::VERSION = '0.1.0';
+  $ElasticSearchX::Model::Document::Trait::Attribute::VERSION = '0.1.3';
 }
 
 # ABSTRACT: Trait that extends the meta class of a document class
@@ -18,10 +18,9 @@ use ElasticSearchX::Model::Document::Mapping;
 
 with 'MooseX::Attribute::LazyInflator::Meta::Role::Attribute';
 
-use ElasticSearchX::Model::Document::Types;
+use ElasticSearchX::Model::Document::Types qw(:all);
 use MooseX::Types::Moose qw(ArrayRef);
 
-has id => ( is => 'ro', isa => 'Bool|ArrayRef', default => 0 );
 has index   => ( is => 'ro' );
 has boost   => ( is => 'ro', isa => 'Num' );
 has store   => ( is => 'ro', isa => 'Str', default => 'yes' );
@@ -36,6 +35,10 @@ has include_in_all => ( is => 'ro', isa => 'Bool', default => 1 );
 has source_only    => ( is => 'ro', isa => 'Bool', default => 0 );
 has include_in_root   => ( is => 'ro', isa => 'Bool' );
 has include_in_parent => ( is => 'ro', isa => 'Bool' );
+has property          => ( is => 'ro', isa => 'Bool', default => 1 );
+has query_property    => ( is => 'ro', isa => 'Bool', default => 0 );
+has field_name =>
+    ( is => 'ro', isa => 'Str', lazy => 1, default => sub { shift->name } );
 
 sub build_property {
     my $self = shift;
@@ -50,6 +53,7 @@ before _process_options => sub {
     my ( $self, $name, $options ) = @_;
     %$options = ( builder => 'build_id', lazy => 1, %$options )
         if ( $options->{id} && ref $options->{id} eq 'ARRAY' );
+
     #$options->{required} = 1 if($options->{id});
     $options->{traits} ||= [];
     push(
@@ -72,6 +76,24 @@ after _process_options => sub {
     }
 };
 
+sub mapping {
+    my $self = shift;
+    return ( $self->name => $self->build_property )
+        unless ( $self->source_only  || $self->parent );
+    return ();
+}
+
+sub type_mapping { () }
+
+after install_accessors => sub {
+    my $self = shift;
+    return unless($self->associated_class->does_role('ElasticSearchX::Model::Document::Role'));
+    $self->associated_class->_add_field_alias(
+        $self->name => $self->field_name );
+    $self->associated_class->_add_reverse_field_alias(
+        $self->field_name => $self->name );
+};
+
 1;
 
 
@@ -84,7 +106,7 @@ ElasticSearchX::Model::Document::Trait::Attribute - Trait that extends the meta 
 
 =head1 VERSION
 
-version 0.1.0
+version 0.1.3
 
 =head1 ATTRIBUTES
 
@@ -120,7 +142,7 @@ to C<string>.
 The value of this property will be used as C<parent> id.
 Since the parent id is stored in the C<_parent> field, it
 is adviced to set L</source_only> to C<1> to prevent the
-field to be stored redundantly.
+field from being stored redundantly.
 
 =head2 source_only
 
@@ -129,6 +151,26 @@ but it's value is included in the C<_source> of a document.
 This is helpful if you don't want to index the value of this
 attribute in ElasticSearch, but still want to be able to access
 its value.
+
+=head2 timestamp
+
+ has timestamp => ( timestamp => 1, is => 'ro' );
+ has timestamp => ( timestamp => { store => 1 }, is => 'ro' );
+
+The attribute using this option will become the timestamp field
+(L<http://www.elasticsearch.org/guide/reference/mapping/timestamp-field.html>).
+
+=head2 ttl
+
+ has expire => ( ttl => 1, is => 'ro' );
+
+ $document->expire(86400) # document will expire in one day
+
+Documents with a ttl field will set the _ttl property on the document in
+ElasticSearch. This will cause ElasticSearch to remove the document
+from the index automatically once the time to live has expired.
+
+See L<http://www.elasticsearch.org/guide/reference/mapping/ttl-field.html>.
 
 =head1 PASS THROUGH ATTRIBUTES
 
