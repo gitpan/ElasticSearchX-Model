@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model;
 {
-  $ElasticSearchX::Model::VERSION = '0.1.3';
+  $ElasticSearchX::Model::VERSION = '0.1.4';
 }
 
 # ABSTRACT: Extensible and flexible model for ElasticSearch based on Moose
@@ -72,7 +72,7 @@ ElasticSearchX::Model - Extensible and flexible model for ElasticSearch based on
 
 =head1 VERSION
 
-version 0.1.3
+version 0.1.4
 
 =head1 SYNOPSIS
 

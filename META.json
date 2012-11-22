@@ -52,6 +52,7 @@
             "File::Temp" : "0",
             "IO::Socket::INET" : "0",
             "Module::Build" : "0.3601",
+            "MooseX::Types::Common::String" : "0",
             "Test::MockObject::Extends" : "0",
             "Test::Most" : "0"
          }
@@ -60,91 +61,91 @@
    "provides" : {
       "ElasticSearchX::Model" : {
          "file" : "lib/ElasticSearchX/Model.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Bulk" : {
          "file" : "lib/ElasticSearchX/Model/Bulk.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document" : {
          "file" : "lib/ElasticSearchX/Model/Document.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Mapping" : {
          "file" : "lib/ElasticSearchX/Model/Document/Mapping.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Role" : {
          "file" : "lib/ElasticSearchX/Model/Document/Role.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Set" : {
          "file" : "lib/ElasticSearchX/Model/Document/Set.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Trait::Attribute" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Attribute.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Trait::Class" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Class.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Trait::Class::ID" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Field/ID.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Trait::Class::Timestamp" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Field/Timestamp.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Trait::Class::Version" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Field/Version.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Trait::Field::ID" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Field/ID.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Trait::Field::TTL" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Field/TTL.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Trait::Field::Timestamp" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Field/Timestamp.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Trait::Field::Version" : {
          "file" : "lib/ElasticSearchX/Model/Document/Trait/Field/Version.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Document::Types" : {
          "file" : "lib/ElasticSearchX/Model/Document/Types.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Index" : {
          "file" : "lib/ElasticSearchX/Model/Index.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Role" : {
          "file" : "lib/ElasticSearchX/Model/Role.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Scroll" : {
          "file" : "lib/ElasticSearchX/Model/Scroll.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Trait::Class" : {
          "file" : "lib/ElasticSearchX/Model/Trait/Class.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Tutorial" : {
          "file" : "lib/ElasticSearchX/Model/Tutorial.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       },
       "ElasticSearchX::Model::Util" : {
          "file" : "lib/ElasticSearchX/Model/Util.pm",
-         "version" : "v0.1.3"
+         "version" : "v0.1.4"
       }
    },
    "release_status" : "stable",
@@ -158,7 +159,7 @@
          "web" : "http://github.com/monken/p5-elasticsearch-model"
       }
    },
-   "version" : "0.1.3",
+   "version" : "0.1.4",
    "x_Dist_Zilla" : {
       "plugins" : [
          {

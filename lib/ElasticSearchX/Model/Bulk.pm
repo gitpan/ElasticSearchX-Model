@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Bulk;
 {
-  $ElasticSearchX::Model::Bulk::VERSION = '0.1.3';
+  $ElasticSearchX::Model::Bulk::VERSION = '0.1.4';
 }
 use Moose;
 
@@ -88,7 +88,7 @@ ElasticSearchX::Model::Bulk
 
 =head1 VERSION
 
-version 0.1.3
+version 0.1.4
 
 =head1 SYNOPSIS
 

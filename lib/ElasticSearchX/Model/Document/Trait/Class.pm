@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Class;
 {
-  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.1.3';
+  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.1.4';
 }
 
 # ABSTRACT: Trait that extends the meta class of a document class
@@ -213,7 +213,7 @@ ElasticSearchX::Model::Document::Trait::Class - Trait that extends the meta clas
 
 =head1 VERSION
 
-version 0.1.3
+version 0.1.4
 
 =head1 ATTRIBUTES
 

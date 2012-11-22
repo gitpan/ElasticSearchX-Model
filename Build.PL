@@ -11,6 +11,7 @@ my %module_build_args = (
     "File::Temp" => 0,
     "IO::Socket::INET" => 0,
     "Module::Build" => "0.3601",
+    "MooseX::Types::Common::String" => 0,
     "Test::MockObject::Extends" => 0,
     "Test::Most" => 0
   },
@@ -22,7 +23,7 @@ my %module_build_args = (
     "Moritz Onken"
   ],
   "dist_name" => "ElasticSearchX-Model",
-  "dist_version" => "0.1.3",
+  "dist_version" => "0.1.4",
   "license" => "bsd",
   "module_name" => "ElasticSearchX::Model",
   "recommends" => {},

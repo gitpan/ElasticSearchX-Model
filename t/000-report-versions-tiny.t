@@ -66,6 +66,7 @@ eval { $v .= pmver('Moose','2.02') };
 eval { $v .= pmver('MooseX::Attribute::Chained','v1.0.1') };
 eval { $v .= pmver('MooseX::Attribute::Deflator','v2.2.0') };
 eval { $v .= pmver('MooseX::Types','any version') };
+eval { $v .= pmver('MooseX::Types::Common::String','any version') };
 eval { $v .= pmver('MooseX::Types::ElasticSearch','v0.0.2') };
 eval { $v .= pmver('MooseX::Types::Structured','any version') };
 eval { $v .= pmver('Scalar::Util','any version') };
