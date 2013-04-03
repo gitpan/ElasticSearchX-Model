@@ -1,7 +1,7 @@
 #
 # This file is part of ElasticSearchX-Model
 #
-# This software is Copyright (c) 2012 by Moritz Onken.
+# This software is Copyright (c) 2013 by Moritz Onken.
 #
 # This is free software, licensed under:
 #
@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model;
 {
-  $ElasticSearchX::Model::VERSION = '0.1.4';
+  $ElasticSearchX::Model::VERSION = '0.1.5';
 }
 
 # ABSTRACT: Extensible and flexible model for ElasticSearch based on Moose
@@ -62,7 +62,7 @@ sub filter {
 
 1;
 
-
+__END__
 
 =pod
 
@@ -72,7 +72,7 @@ ElasticSearchX::Model - Extensible and flexible model for ElasticSearch based on
 
 =head1 VERSION
 
-version 0.1.4
+version 0.1.5
 
 =head1 SYNOPSIS
 
@@ -232,14 +232,10 @@ Moritz Onken
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Moritz Onken.
+This software is Copyright (c) 2013 by Moritz Onken.
 
 This is free software, licensed under:
 
   The (three-clause) BSD License
 
 =cut
-
-
-__END__
-

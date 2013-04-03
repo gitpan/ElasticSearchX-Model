@@ -13,6 +13,7 @@ my %module_build_args = (
     "Module::Build" => "0.3601",
     "MooseX::Types::Common::String" => 0,
     "Test::MockObject::Extends" => 0,
+    "Test::More" => "0.88",
     "Test::Most" => 0
   },
   "configure_requires" => {
@@ -23,7 +24,7 @@ my %module_build_args = (
     "Moritz Onken"
   ],
   "dist_name" => "ElasticSearchX-Model",
-  "dist_version" => "0.1.4",
+  "dist_version" => "0.1.5",
   "license" => "bsd",
   "module_name" => "ElasticSearchX::Model",
   "recommends" => {},

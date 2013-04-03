@@ -1,7 +1,7 @@
 #
 # This file is part of ElasticSearchX-Model
 #
-# This software is Copyright (c) 2012 by Moritz Onken.
+# This software is Copyright (c) 2013 by Moritz Onken.
 #
 # This is free software, licensed under:
 #
@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Bulk;
 {
-  $ElasticSearchX::Model::Bulk::VERSION = '0.1.4';
+  $ElasticSearchX::Model::Bulk::VERSION = '0.1.5';
 }
 use Moose;
 
@@ -78,7 +78,7 @@ sub DEMOLISH {
 
 1;
 
-
+__END__
 
 =pod
 
@@ -88,7 +88,7 @@ ElasticSearchX::Model::Bulk
 
 =head1 VERSION
 
-version 0.1.4
+version 0.1.5
 
 =head1 SYNOPSIS
 
@@ -165,14 +165,10 @@ Moritz Onken
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Moritz Onken.
+This software is Copyright (c) 2013 by Moritz Onken.
 
 This is free software, licensed under:
 
   The (three-clause) BSD License
 
 =cut
-
-
-__END__
-

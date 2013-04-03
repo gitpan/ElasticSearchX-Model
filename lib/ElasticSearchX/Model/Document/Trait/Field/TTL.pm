@@ -1,7 +1,7 @@
 #
 # This file is part of ElasticSearchX-Model
 #
-# This software is Copyright (c) 2012 by Moritz Onken.
+# This software is Copyright (c) 2013 by Moritz Onken.
 #
 # This is free software, licensed under:
 #
@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Field::TTL;
 {
-  $ElasticSearchX::Model::Document::Trait::Field::TTL::VERSION = '0.1.4';
+  $ElasticSearchX::Model::Document::Trait::Field::TTL::VERSION = '0.1.5';
 }
 use Moose::Role;
 use ElasticSearchX::Model::Document::Types qw(:all);
@@ -36,6 +36,7 @@ around property => sub {0};
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -44,7 +45,7 @@ ElasticSearchX::Model::Document::Trait::Field::TTL
 
 =head1 VERSION
 
-version 0.1.4
+version 0.1.5
 
 =head1 AUTHOR
 
@@ -52,11 +53,10 @@ Moritz Onken
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Moritz Onken.
+This software is Copyright (c) 2013 by Moritz Onken.
 
 This is free software, licensed under:
 
   The (three-clause) BSD License
 
 =cut
-

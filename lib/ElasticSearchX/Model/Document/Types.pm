@@ -1,7 +1,7 @@
 #
 # This file is part of ElasticSearchX-Model
 #
-# This software is Copyright (c) 2012 by Moritz Onken.
+# This software is Copyright (c) 2013 by Moritz Onken.
 #
 # This is free software, licensed under:
 #
@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Types;
 {
-  $ElasticSearchX::Model::Document::Types::VERSION = '0.1.4';
+  $ElasticSearchX::Model::Document::Types::VERSION = '0.1.5';
 }
 use List::MoreUtils ();
 use DateTime::Format::Epoch::Unix;
@@ -183,6 +183,7 @@ no MooseX::Attribute::Deflator;
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -191,7 +192,7 @@ ElasticSearchX::Model::Document::Types
 
 =head1 VERSION
 
-version 0.1.4
+version 0.1.5
 
 =head1 AUTHOR
 
@@ -199,11 +200,10 @@ Moritz Onken
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Moritz Onken.
+This software is Copyright (c) 2013 by Moritz Onken.
 
 This is free software, licensed under:
 
   The (three-clause) BSD License
 
 =cut
-

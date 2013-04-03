@@ -2,7 +2,7 @@
 #
 # This file is part of ElasticSearchX-Model
 #
-# This software is Copyright (c) 2012 by Moritz Onken.
+# This software is Copyright (c) 2013 by Moritz Onken.
 #
 # This is free software, licensed under:
 #
@@ -79,4 +79,5 @@ $plan ? (plan tests => $plan) : (plan skip_all => "no tests to run");
             script_compiles( $file, "$script script compiles" );
         }
     }
+
 }

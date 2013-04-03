@@ -1,3 +1,6 @@
+0.1.5 - 2013-04-02
+  - The latest Moose release (2.08) broke this module.
+
 0.1.4 - 2012-11-22
   - Add missing prereq
 

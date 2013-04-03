@@ -1,7 +1,7 @@
 #
 # This file is part of ElasticSearchX-Model
 #
-# This software is Copyright (c) 2012 by Moritz Onken.
+# This software is Copyright (c) 2013 by Moritz Onken.
 #
 # This is free software, licensed under:
 #
@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Set;
 {
-  $ElasticSearchX::Model::Document::Set::VERSION = '0.1.4';
+  $ElasticSearchX::Model::Document::Set::VERSION = '0.1.5';
 }
 
 # ABSTRACT: Represents a query used for fetching a set of results
@@ -218,8 +218,8 @@ sub scroll {
 
 __PACKAGE__->meta->make_immutable;
 
-
 __END__
+
 =pod
 
 =head1 NAME
@@ -228,7 +228,7 @@ ElasticSearchX::Model::Document::Set - Represents a query used for fetching a se
 
 =head1 VERSION
 
-version 0.1.4
+version 0.1.5
 
 =head1 SYNOPSIS
 
@@ -429,11 +429,10 @@ Moritz Onken
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Moritz Onken.
+This software is Copyright (c) 2013 by Moritz Onken.
 
 This is free software, licensed under:
 
   The (three-clause) BSD License
 
 =cut
-
