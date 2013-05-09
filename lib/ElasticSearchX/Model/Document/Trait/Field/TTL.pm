@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Field::TTL;
 {
-  $ElasticSearchX::Model::Document::Trait::Field::TTL::VERSION = '0.1.5';
+  $ElasticSearchX::Model::Document::Trait::Field::TTL::VERSION = '0.1.6';
 }
 use Moose::Role;
 use ElasticSearchX::Model::Document::Types qw(:all);
@@ -45,7 +45,7 @@ ElasticSearchX::Model::Document::Trait::Field::TTL
 
 =head1 VERSION
 
-version 0.1.5
+version 0.1.6
 
 =head1 AUTHOR
 

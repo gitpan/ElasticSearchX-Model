@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Field::ID;
 {
-  $ElasticSearchX::Model::Document::Trait::Field::ID::VERSION = '0.1.5';
+  $ElasticSearchX::Model::Document::Trait::Field::ID::VERSION = '0.1.6';
 }
 use Moose::Role;
 use ElasticSearchX::Model::Document::Types qw(:all);
@@ -28,7 +28,7 @@ after install_accessors => sub {
 
 package ElasticSearchX::Model::Document::Trait::Class::ID;
 {
-  $ElasticSearchX::Model::Document::Trait::Class::ID::VERSION = '0.1.5';
+  $ElasticSearchX::Model::Document::Trait::Class::ID::VERSION = '0.1.6';
 }
 use Moose::Role;
 
@@ -44,7 +44,7 @@ ElasticSearchX::Model::Document::Trait::Field::ID
 
 =head1 VERSION
 
-version 0.1.5
+version 0.1.6
 
 =head1 AUTHOR
 

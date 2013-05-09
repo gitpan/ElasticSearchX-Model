@@ -9,14 +9,14 @@
 #
 package ElasticSearchX::Model::Document::Trait::Field::Version;
 {
-  $ElasticSearchX::Model::Document::Trait::Field::Version::VERSION = '0.1.5';
+  $ElasticSearchX::Model::Document::Trait::Field::Version::VERSION = '0.1.6';
 }
 use Moose::Role;
 use ElasticSearchX::Model::Document::Types qw(:all);
 
 package ElasticSearchX::Model::Document::Trait::Class::Version;
 {
-  $ElasticSearchX::Model::Document::Trait::Class::Version::VERSION = '0.1.5';
+  $ElasticSearchX::Model::Document::Trait::Class::Version::VERSION = '0.1.6';
 }
 use Moose::Role;
 
@@ -33,7 +33,7 @@ ElasticSearchX::Model::Document::Trait::Field::Version
 
 =head1 VERSION
 
-version 0.1.5
+version 0.1.6
 
 =head1 AUTHOR
 

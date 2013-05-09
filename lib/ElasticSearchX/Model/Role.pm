@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Role;
 {
-  $ElasticSearchX::Model::Role::VERSION = '0.1.5';
+  $ElasticSearchX::Model::Role::VERSION = '0.1.6';
 }
 use Moose::Role;
 use ElasticSearch;
@@ -59,7 +59,7 @@ sub deploy {
         }
         if ( my $alias = $index->alias_for ) {
             my @aliases
-                = keys %{ $self->es->get_aliases( index => $index->name )
+                = keys %{ $self->es->get_aliases( index => $index->name, ignore_missing => 1 )
                     || {} };
             my $actions = [
                 (   map {
@@ -98,7 +98,7 @@ ElasticSearchX::Model::Role
 
 =head1 VERSION
 
-version 0.1.5
+version 0.1.6
 
 =head1 AUTHOR
 

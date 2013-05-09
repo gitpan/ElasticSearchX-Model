@@ -7,14 +7,7 @@ use Module::Build 0.3601;
 
 my %module_build_args = (
   "build_requires" => {
-    "File::Find" => 0,
-    "File::Temp" => 0,
-    "IO::Socket::INET" => 0,
-    "Module::Build" => "0.3601",
-    "MooseX::Types::Common::String" => 0,
-    "Test::MockObject::Extends" => 0,
-    "Test::More" => "0.88",
-    "Test::Most" => 0
+    "Module::Build" => "0.3601"
   },
   "configure_requires" => {
     "Module::Build" => "0.3601"
@@ -24,7 +17,7 @@ my %module_build_args = (
     "Moritz Onken"
   ],
   "dist_name" => "ElasticSearchX-Model",
-  "dist_version" => "0.1.5",
+  "dist_version" => "0.1.6",
   "license" => "bsd",
   "module_name" => "ElasticSearchX::Model",
   "recommends" => {},
@@ -35,7 +28,7 @@ my %module_build_args = (
     "DateTime::Format::Epoch::Unix" => 0,
     "DateTime::Format::ISO8601" => 0,
     "Digest::SHA1" => 0,
-    "ElasticSearch" => "0.61",
+    "ElasticSearch" => "0.65",
     "JSON" => 0,
     "List::MoreUtils" => 0,
     "List::Util" => 0,
@@ -49,9 +42,32 @@ my %module_build_args = (
     "Scalar::Util" => 0,
     "Sub::Exporter" => 0
   },
-  "script_files" => []
+  "script_files" => [],
+  "test_requires" => {
+    "File::Find" => 0,
+    "File::Temp" => 0,
+    "IO::Socket::INET" => 0,
+    "Module::Build" => "0.3601",
+    "MooseX::Types::Common::String" => 0,
+    "Test::MockObject::Extends" => 0,
+    "Test::More" => "0.88",
+    "Test::Most" => 0
+  }
 );
 
+
+unless ( eval { Module::Build->VERSION(0.4004) } ) {
+  my $tr = delete $module_build_args{test_requires};
+  my $br = $module_build_args{build_requires};
+  for my $mod ( keys %$tr ) {
+    if ( exists $br->{$mod} ) {
+      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
+    }
+    else {
+      $br->{$mod} = $tr->{$mod};
+    }
+  }
+}
 
 my $build = Module::Build->new(%module_build_args);
 
