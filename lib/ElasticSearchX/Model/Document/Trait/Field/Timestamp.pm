@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Field::Timestamp;
 {
-  $ElasticSearchX::Model::Document::Trait::Field::Timestamp::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Document::Trait::Field::Timestamp::VERSION = '0.1.7';
 }
 use Moose::Role;
 use ElasticSearchX::Model::Document::Types qw(:all);
@@ -36,7 +36,7 @@ around property => sub {0};
 
 package ElasticSearchX::Model::Document::Trait::Class::Timestamp;
 {
-  $ElasticSearchX::Model::Document::Trait::Class::Timestamp::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Document::Trait::Class::Timestamp::VERSION = '0.1.7';
 }
 use Moose::Role;
 
@@ -46,13 +46,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 ElasticSearchX::Model::Document::Trait::Field::Timestamp
 
 =head1 VERSION
 
-version 0.1.6
+version 0.1.7
 
 =head1 AUTHOR
 

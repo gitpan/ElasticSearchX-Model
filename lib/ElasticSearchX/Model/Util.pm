@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Util;
 {
-  $ElasticSearchX::Model::Util::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Util::VERSION = '0.1.7';
 }
 use strict;
 use warnings;
@@ -28,13 +28,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 ElasticSearchX::Model::Util
 
 =head1 VERSION
 
-version 0.1.6
+version 0.1.7
 
 =head1 AUTHOR
 

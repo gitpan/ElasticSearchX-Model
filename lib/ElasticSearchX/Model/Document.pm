@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document;
 {
-  $ElasticSearchX::Model::Document::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Document::VERSION = '0.1.7';
 }
 
 use strict;
@@ -44,13 +44,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 ElasticSearchX::Model::Document
 
 =head1 VERSION
 
-version 0.1.6
+version 0.1.7
 
 =head1 SYNOPSIS
 

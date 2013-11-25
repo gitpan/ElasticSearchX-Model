@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Field::ID;
 {
-  $ElasticSearchX::Model::Document::Trait::Field::ID::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Document::Trait::Field::ID::VERSION = '0.1.7';
 }
 use Moose::Role;
 use ElasticSearchX::Model::Document::Types qw(:all);
@@ -24,11 +24,12 @@ after install_accessors => sub {
     return unless($self->associated_class->does_role('ElasticSearchX::Model::Document::Role'));
     $self->associated_class->_add_reverse_field_alias(
         _id => $self->name );
+    $self->associated_class->_id_attribute($self);
 };
 
 package ElasticSearchX::Model::Document::Trait::Class::ID;
 {
-  $ElasticSearchX::Model::Document::Trait::Class::ID::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Document::Trait::Class::ID::VERSION = '0.1.7';
 }
 use Moose::Role;
 
@@ -38,13 +39,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 ElasticSearchX::Model::Document::Trait::Field::ID
 
 =head1 VERSION
 
-version 0.1.6
+version 0.1.7
 
 =head1 AUTHOR
 

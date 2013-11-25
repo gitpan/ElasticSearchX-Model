@@ -6,7 +6,6 @@ META.json
 META.yml
 README
 README.pod
-TODO
 dist.ini
 lib/ElasticSearchX/Model.pm
 lib/ElasticSearchX/Model/Bulk.pm

@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Trait::Class;
 {
-  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Document::Trait::Class::VERSION = '0.1.7';
 }
 
 # ABSTRACT: Trait that extends the meta class of a document class
@@ -17,6 +17,7 @@ use Moose::Role;
 use Carp;
 use List::Util ();
 use Module::Find ();
+use Class::Load  ();
 use Eval::Closure;
 
 has set_class  => ( is => 'ro', builder => '_build_set_class',  lazy => 1 );
@@ -38,7 +39,7 @@ has _reverse_field_alias => (
     default => sub { {} },
     handles => { _add_reverse_field_alias => 'set' },
 );
-has _id_attribute => ( is => 'ro', lazy_build => 1 );
+has _id_attribute => ( is => 'rw', lazy_build => 1 );
 
 has _attribute_traits => ( is => 'ro', lazy_build => 1 );
 
@@ -55,7 +56,7 @@ sub _build__attribute_traits {
 sub _build_set_class {
     my $self = shift;
     my $set  = $self->name . '::Set';
-    eval { Class::MOP::load_class($set); } and return $set
+    eval { Class::Load::load_class($set); } and return $set
         or return 'ElasticSearchX::Model::Document::Set';
 }
 
@@ -214,13 +215,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 ElasticSearchX::Model::Document::Trait::Class - Trait that extends the meta class of a document class
 
 =head1 VERSION
 
-version 0.1.6
+version 0.1.7
 
 =head1 ATTRIBUTES
 

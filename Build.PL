@@ -17,13 +17,14 @@ my %module_build_args = (
     "Moritz Onken"
   ],
   "dist_name" => "ElasticSearchX-Model",
-  "dist_version" => "0.1.6",
+  "dist_version" => "0.1.7",
   "license" => "bsd",
   "module_name" => "ElasticSearchX::Model",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
     "Carp" => 0,
+    "Class::Load" => 0,
     "DateTime" => 0,
     "DateTime::Format::Epoch::Unix" => 0,
     "DateTime::Format::ISO8601" => 0,
@@ -45,8 +46,11 @@ my %module_build_args = (
   "script_files" => [],
   "test_requires" => {
     "File::Find" => 0,
+    "File::Spec" => 0,
     "File::Temp" => 0,
+    "IO::Handle" => 0,
     "IO::Socket::INET" => 0,
+    "IPC::Open3" => 0,
     "Module::Build" => "0.3601",
     "MooseX::Types::Common::String" => 0,
     "Test::MockObject::Extends" => 0,
@@ -56,17 +60,24 @@ my %module_build_args = (
 );
 
 
+my %fallback_build_requires = (
+  "File::Find" => 0,
+  "File::Spec" => 0,
+  "File::Temp" => 0,
+  "IO::Handle" => 0,
+  "IO::Socket::INET" => 0,
+  "IPC::Open3" => 0,
+  "Module::Build" => "0.3601",
+  "MooseX::Types::Common::String" => 0,
+  "Test::MockObject::Extends" => 0,
+  "Test::More" => "0.88",
+  "Test::Most" => 0
+);
+
+
 unless ( eval { Module::Build->VERSION(0.4004) } ) {
-  my $tr = delete $module_build_args{test_requires};
-  my $br = $module_build_args{build_requires};
-  for my $mod ( keys %$tr ) {
-    if ( exists $br->{$mod} ) {
-      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
-    }
-    else {
-      $br->{$mod} = $tr->{$mod};
-    }
-  }
+  delete $module_build_args{test_requires};
+  $module_build_args{build_requires} = \%fallback_build_requires;
 }
 
 my $build = Module::Build->new(%module_build_args);

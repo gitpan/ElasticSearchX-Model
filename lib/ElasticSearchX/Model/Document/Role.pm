@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Role;
 {
-  $ElasticSearchX::Model::Document::Role::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Document::Role::VERSION = '0.1.7';
 }
 use Moose::Role;
 use ElasticSearchX::Model::Util ();
@@ -144,13 +144,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 ElasticSearchX::Model::Document::Role
 
 =head1 VERSION
 
-version 0.1.6
+version 0.1.7
 
 =head1 AUTHOR
 

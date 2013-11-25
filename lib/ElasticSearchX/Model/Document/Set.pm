@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Set;
 {
-  $ElasticSearchX::Model::Document::Set::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Document::Set::VERSION = '0.1.7';
 }
 
 # ABSTRACT: Represents a query used for fetching a set of results
@@ -222,13 +222,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 ElasticSearchX::Model::Document::Set - Represents a query used for fetching a set of results
 
 =head1 VERSION
 
-version 0.1.6
+version 0.1.7
 
 =head1 SYNOPSIS
 

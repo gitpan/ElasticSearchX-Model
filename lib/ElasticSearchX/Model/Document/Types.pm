@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Document::Types;
 {
-  $ElasticSearchX::Model::Document::Types::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Document::Types::VERSION = '0.1.7';
 }
 use List::MoreUtils ();
 use DateTime::Format::Epoch::Unix;
@@ -186,13 +186,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 ElasticSearchX::Model::Document::Types
 
 =head1 VERSION
 
-version 0.1.6
+version 0.1.7
 
 =head1 AUTHOR
 

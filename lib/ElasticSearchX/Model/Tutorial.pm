@@ -9,7 +9,7 @@
 #
 package ElasticSearchX::Model::Tutorial;
 {
-  $ElasticSearchX::Model::Tutorial::VERSION = '0.1.6';
+  $ElasticSearchX::Model::Tutorial::VERSION = '0.1.7';
 }
 # ABSTRACT: Tutorial for ElasticSearchX::Model
 1;
@@ -18,13 +18,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 ElasticSearchX::Model::Tutorial - Tutorial for ElasticSearchX::Model
 
 =head1 VERSION
 
-version 0.1.6
+version 0.1.7
 
 =head1 INTRODUCTION
 
